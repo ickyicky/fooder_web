@@ -20,7 +20,36 @@ class DiaryWidget extends StatelessWidget {
             MealWidget(
               meal: meal,
               ),
-            Text(diary.date.toString()),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "carb: ${diary.carb.toStringAsFixed(2)}",
+                        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                      ),
+                      Text(
+                        "fat: ${diary.fat.toStringAsFixed(2)}",
+                        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                      ),
+                      Text(
+                        "protein: ${diary.protein.toStringAsFixed(2)}",
+                        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                      ),
+                      Text(
+                        "calories: ${diary.calories.toStringAsFixed(2)}",
+                        style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

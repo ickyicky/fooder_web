@@ -72,6 +72,10 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   Future<void> _asyncInitState() async {
+    if (widget.apiClient.refreshToken == null) {
+      return;
+    }
+
     try {
       await widget.apiClient.refresh();
       showText("Welcome back!");
@@ -96,17 +100,18 @@ class _LoginScreen extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
                TextFormField(
-                 decoration: const InputDecoration(
-                   labelText: 'Username',
-                 ),
-                 controller: usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'Username',
+                ),
+                controller: usernameController,
                ),
                TextFormField(
-                 obscureText: true,
-                 decoration: const InputDecoration(
-                   labelText: 'Password',
-                 ),
-                 controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                controller: passwordController,
+                onFieldSubmitted: (_) => _login()
                ),
                FilledButton(
                 onPressed: _login,

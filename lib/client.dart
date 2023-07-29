@@ -40,6 +40,14 @@ class ApiClient {
     return headers;
   }
 
+  Map<String, dynamic> _jsonDecode(http.Response response) {
+    try {
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
+  }
+
   Future<Map<String, dynamic>> get(String path) async {
     final response = await httpClient.get(
       Uri.parse('$baseUrl$path'),
@@ -50,7 +58,7 @@ class ApiClient {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
 
-    return jsonDecode(response.body);
+    return _jsonDecode(response);
   }
 
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body) async {
@@ -64,7 +72,7 @@ class ApiClient {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
 
-    return jsonDecode(response.body);
+    return _jsonDecode(response);
   }
 
 
@@ -78,7 +86,7 @@ class ApiClient {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
 
-    return jsonDecode(response.body);
+    return _jsonDecode(response);
   }
 
   Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) async {
@@ -92,7 +100,7 @@ class ApiClient {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
 
-    return jsonDecode(response.body);
+    return _jsonDecode(response);
   }
 
   Future<void> login(String username, String password) async {
@@ -114,11 +122,11 @@ class ApiClient {
       throw Exception('Failed to login');
     }
     
-    final token = jsonDecode(response.body)['access_token'];
+    final token = _jsonDecode(response)['access_token'];
     this.token = token;
     window.localStorage['token'] = token;
 
-    final refreshToken = jsonDecode(response.body)['refresh_token'];
+    final refreshToken = _jsonDecode(response)['refresh_token'];
     this.refreshToken = refreshToken;
     window.localStorage['refreshToken'] = refreshToken;
   }
@@ -141,7 +149,37 @@ class ApiClient {
     window.localStorage['refreshToken'] = refreshToken!;
   }
 
-  Future<Map<String, dynamic>> getDiary() async {
-    return await get("/diary?date=2023-07-29");
+  Future<Map<String, dynamic>> getDiary({required DateTime date}) async {
+    var params = {
+      "date": "${date.year}-${date.month}-${date.day}",
+    };
+    var response = await get("/diary?${Uri(queryParameters: params).query}");
+    return response;
+  }
+
+  void logout() {
+    token = null;
+    refreshToken = null;
+    window.localStorage.remove('token');
+    window.localStorage.remove('refreshToken');
+  }
+
+  Future<Map<String, dynamic>> getProducts(String q) async {
+    var response = await get("/product?${Uri(queryParameters: {"q": q}).query}");
+    return response;
+  }
+
+  Future<void> addEntry({
+    required double grams,
+    required int productId,
+    required int mealId,
+  }
+  ) async {
+    var entry = {
+      "grams": grams,
+      "product_id": productId,
+      "meal_id": mealId,
+    };
+    await post("/entry", entry);
   }
 }

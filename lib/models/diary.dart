@@ -23,7 +23,7 @@ class Diary {
   Diary.fromJson(Map<String, dynamic> map):
     id = map['id'] as int,
     date = DateTime.parse(map['date']),
-    meals = <Meal>[],
+    meals = (map['meals'] as List<dynamic>).map((e) => Meal.fromJson(e as Map<String, dynamic>)).toList(),
     calories = map['calories'] as double,
     protein = map['protein'] as double,
     carb = map['carb'] as double,

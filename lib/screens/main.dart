@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/models/meal.dart';
-import 'package:fooder_web/models/entry.dart';
+import 'package:fooder_web/screens/login.dart';
+import 'package:fooder_web/screens/add_entry.dart';
 import 'package:fooder_web/models/diary.dart';
 import 'package:fooder_web/widgets/diary.dart';
 
@@ -15,6 +15,7 @@ class MainScreen extends BasedScreen {
 
 class _MainScreen extends State<MainScreen> {
   Diary? diary;
+  DateTime date = DateTime.now();
 
   @override
   void initState () {
@@ -23,35 +24,89 @@ class _MainScreen extends State<MainScreen> {
   }
 
   Future<void> _asyncInitState() async {
-    var diaryMap = await widget.apiClient.getDiary();
+    var diaryMap = await widget.apiClient.getDiary(date: date);
     setState(() {
       diary = Diary.fromJson(diaryMap);
+      date = date;
     });
+  }
+
+  Future<void> _pickDate() async {
+    date = (await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2025),
+    ))!;
+    await _asyncInitState();
+  }
+
+  void _logout() async {
+    widget.apiClient.logout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(apiClient: widget.apiClient),
+      ),
+    );
+  }
+
+  Future<void> _addEntry() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddEntryScreen(apiClient: widget.apiClient, diary: diary!),
+      ),
+    ).then((_) => _asyncInitState());
   }
 
   @override
   Widget build(BuildContext context) {
-    var content;
-    var title = "FOODER";
+    Widget content;
+    Widget title;
 
     if (diary != null) {
       content = Container(
-        constraints: const BoxConstraints(maxWidth: 600),
+        constraints: const BoxConstraints(maxWidth: 720),
         padding: const EdgeInsets.all(10),
         child: DiaryWidget(diary: diary!),
       );
-      title = "FOODER - ${diary!.date.year}-${diary!.date.month}-${diary!.date.day}";
+      title = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text("🅵🅾🅾🅳🅴🆁"),
+          const Spacer(),
+          Text(
+            "${date.year}-${date.month}-${date.day}",
+            style: const TextStyle(fontSize: 20),
+          ),
+          IconButton(
+            icon: const Icon(Icons.calendar_month),
+            onPressed: _pickDate,
+          ),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
+          ),
+        ],
+      );
     } else {
       content = const CircularProgressIndicator();
+      title = const Text("🅵🅾🅾🅳🅴🆁");
     }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
+        title: title,
       ),
       body: Center(
         child: content,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addEntry,
+        child: const Icon(Icons.add),
       ),
     );
   }

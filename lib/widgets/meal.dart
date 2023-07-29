@@ -16,12 +16,43 @@ class MealWidget extends StatelessWidget {
        padding: const EdgeInsets.only(
           top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
           child: ExpansionTile(
-          title: const Text('SEKS Z KOBIETA'),
-          children: <Widget>[
-            for (var entry in meal.entries)
-              EntryWidget(
-                entry: entry,
+            title: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        meal.name,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    Text("${meal.calories.toStringAsFixed(2)} kcal"),
+                  ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "carb: ${meal.carb.toStringAsFixed(2)}",
+                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                    ),
+                    Text(
+                      "fat: ${meal.fat.toStringAsFixed(2)}",
+                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                    ),
+                    Text(
+                      "protein: ${meal.protein.toStringAsFixed(2)}",
+                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            children: <Widget>[
+              for (var entry in meal.entries)
+                EntryWidget(
+                  entry: entry,
+                  ),
           ],
         ),
       ),
