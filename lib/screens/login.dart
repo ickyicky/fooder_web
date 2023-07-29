@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
+import 'package:fooder_web/screens/main.dart';
 
 
 class LoginScreen extends BasedScreen {
@@ -42,11 +43,16 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void popMeDady() {
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainScreen(apiClient: widget.apiClient),
+      ),
+    );
   }
 
   // login client when button pressed
-  void _login() async {
+  Future<void> _login() async {
     try {
       await widget.apiClient.login(
         usernameController.text,
@@ -58,13 +64,30 @@ class _LoginScreen extends State<LoginScreen> {
       showError(e.toString());
     }
   }
+  @override
+  void initState () {
+    super.initState();
+    _asyncInitState().then((value) => null);
+  }
+
+  Future<void> _asyncInitState() async {
+    super.initState();
+
+    try {
+      await widget.apiClient.refresh();
+      showText("Welcome back!");
+      popMeDady();
+    } on Exception catch (_) {
+      showError("Session is not longer valid, please log in again");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("FOODER login"),
+        title: const Text("FOODER"),
       ),
       body: Center(
         child: Container(

@@ -42,6 +42,11 @@ class ApiClient {
       Uri.parse('$baseUrl$path'),
       headers: headers(),
     );
+
+    if (response.statusCode != 200) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
+
     return jsonDecode(response.body);
   }
 
@@ -51,6 +56,11 @@ class ApiClient {
       body: jsonEncode(body),
       headers: headers(),
     );
+
+    if (response.statusCode != 200) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
+
     return jsonDecode(response.body);
   }
 
@@ -60,6 +70,11 @@ class ApiClient {
       Uri.parse('$baseUrl$path'),
       headers: headers(),
     );
+
+    if (response.statusCode != 200) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
+
     return jsonDecode(response.body);
   }
 
@@ -69,6 +84,11 @@ class ApiClient {
       body: jsonEncode(body),
       headers: headers(),
     );
+
+    if (response.statusCode != 200) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
+
     return jsonDecode(response.body);
   }
 
@@ -98,5 +118,23 @@ class ApiClient {
     final refreshToken = jsonDecode(response.body)['refresh_token'];
     this.refreshToken = refreshToken;
     window.localStorage['refreshToken'] = refreshToken;
+  }
+
+  Future<void> refresh() async {
+    if (refreshToken == null) {
+      throw Exception("No valid refresh token found");
+    }
+
+    final response = await post(
+      "/token/refresh",
+      {
+        "refresh_token": refreshToken,
+      }
+    );
+
+    token = response['access_token'] as String;
+    window.localStorage['token'] = token!;
+    refreshToken = response['refresh_token'] as String;
+    window.localStorage['refreshToken'] = refreshToken!;
   }
 }

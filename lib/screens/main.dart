@@ -1,56 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/screens/login.dart';
-import 'package:fooder_web/client.dart';
 import 'package:fooder_web/models/meal.dart';
 import 'package:fooder_web/models/entry.dart';
 import 'package:fooder_web/models/diary.dart';
 import 'package:fooder_web/widgets/diary.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+class MainScreen extends BasedScreen {
+  const MainScreen({super.key, required super.apiClient});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueGrey,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      home: MyHomePage(
-        apiClient: ApiClient(
-          baseUrl: 'https://fooderapi.domandoman.xyz/api',
-        ),
-        title: 'FOODER',
-      ),
-    );
-  }
+  State<MainScreen> createState() => _MainScreen();
 }
 
-class MyHomePage extends BasedScreen {
-  final String title;
-
-  const MyHomePage({super.key, required super.apiClient, required this.title});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  // login client when button pressed
-  void _login() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginScreen(apiClient: widget.apiClient),
-      ),
-    );
-  }
-
+class _MainScreen extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var testDiary = Diary(
@@ -97,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("FOODER"),
       ),
       body: Center(
         child: Container(
