@@ -72,7 +72,7 @@ class ApiClient {
     return jsonDecode(response.body);
   }
 
-  void login(String username, String password) async {
+  Future<void> login(String username, String password) async {
     final headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',

@@ -21,13 +21,42 @@ class _LoginScreen extends State<LoginScreen> {
     super.dispose();
   }
 
+  void showError(String message)
+  {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, textAlign: TextAlign.center),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
+  }
+
+  void showText(String text)
+  {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text, textAlign: TextAlign.center),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+    );
+  }
+
+  void popMeDady() {
+    Navigator.pop(context);
+  }
+
   // login client when button pressed
   void _login() async {
-    widget.apiClient.login(
-      usernameController.text,
-      passwordController.text,
-    );
-    Navigator.pop(context);
+    try {
+      await widget.apiClient.login(
+        usernameController.text,
+        passwordController.text,
+      );
+      showText("Logged in");
+      popMeDady();
+    } on Exception catch (e) {
+      showError(e.toString());
+    }
   }
 
   @override
@@ -35,7 +64,7 @@ class _LoginScreen extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("ANALUJ"),
+        title: const Text("FOODER login"),
       ),
       body: Center(
         child: Container(
