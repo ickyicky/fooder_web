@@ -3,7 +3,7 @@ import 'package:fooder_web/based.dart';
 
 
 class LoginScreen extends BasedScreen {
-  LoginScreen({super.key, required super.apiClient});
+  const LoginScreen({super.key, required super.apiClient});
 
   @override
   State<LoginScreen> createState() => _LoginScreen();
@@ -35,12 +35,12 @@ class _LoginScreen extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("ANALUJ"),
+        title: const Text("ANALUJ"),
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 600),
-          padding: EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxWidth: 600),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -59,7 +59,7 @@ class _LoginScreen extends State<LoginScreen> {
                ),
                FilledButton(
                 onPressed: _login,
-                child: Text('Login'),
+                child: const Text('Login'),
               )
             ],
           ),

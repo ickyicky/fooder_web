@@ -5,23 +5,23 @@ import 'dart:html';
 
 class ApiClient {
   final String baseUrl;
-  String? token = null;
-  String? refreshToken = null;
+  String? token;
+  String? refreshToken;
   http.Client httpClient = http.Client();
 
   ApiClient({
     required this.baseUrl,
   }) {
     if (window.localStorage.containsKey('token')) {
-      this.token = window.localStorage['token'];
+      token = window.localStorage['token'];
     }
     if (window.localStorage.containsKey('refreshToken')) {
-      this.refreshToken = window.localStorage['refreshToken'];
+      refreshToken = window.localStorage['refreshToken'];
     }
   }
 
   Map<String, String> headers() {
-    if (this.token == null) {
+    if (token == null) {
       throw Exception('Not logged in');
     }
 
@@ -30,8 +30,8 @@ class ApiClient {
       'Accept': 'application/json',
     };
 
-    if (this.token != null) {
-      headers['Authorization'] = 'Bearer ${this.token}';
+    if (token != null) {
+      headers['Authorization'] = 'Bearer $token';
     }
 
     return headers;
@@ -40,7 +40,7 @@ class ApiClient {
   Future<Map<String, dynamic>> get(String path) async {
     final response = await httpClient.get(
       Uri.parse('$baseUrl$path'),
-      headers: this.headers(),
+      headers: headers(),
     );
     return jsonDecode(response.body);
   }
@@ -49,7 +49,7 @@ class ApiClient {
     final response = await httpClient.post(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),
-      headers: this.headers(),
+      headers: headers(),
     );
     return jsonDecode(response.body);
   }
@@ -58,7 +58,7 @@ class ApiClient {
   Future<Map<String, dynamic>> delete(String path) async {
     final response = await httpClient.delete(
       Uri.parse('$baseUrl$path'),
-      headers: this.headers(),
+      headers: headers(),
     );
     return jsonDecode(response.body);
   }
@@ -67,7 +67,7 @@ class ApiClient {
     final response = await httpClient.patch(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),
-      headers: this.headers(),
+      headers: headers(),
     );
     return jsonDecode(response.body);
   }

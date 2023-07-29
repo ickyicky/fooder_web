@@ -56,14 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 600),
-          padding: EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxWidth: 600),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
                FilledButton(
                 onPressed: _login,
-                child: Text('Login'),
+                child: const Text('Login'),
               )
             ],
           ),
