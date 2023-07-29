@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/based.dart';
-import 'package:fooder_web/login_screen.dart';
+import 'package:fooder_web/screens/based.dart';
+import 'package:fooder_web/screens/login.dart';
 import 'package:fooder_web/client.dart';
 
 class MyApp extends StatelessWidget {

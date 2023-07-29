@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/based.dart';
+import 'package:fooder_web/screens/based.dart';
 
 
 class LoginScreen extends BasedScreen {
