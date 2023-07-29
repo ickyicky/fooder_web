@@ -6,13 +6,12 @@ class Product {
   final double carb;
   final double fat;
 
-
-  const Entry({
+  const Product({
     required this.id,
-    required this.name;
-    required this.calories;
-    required this.protein;
-    required this.carb;
-    required this.fat;
+    required this.name,
+    required this.calories,
+    required this.protein,
+    required this.carb,
+    required this.fat,
   });
 }

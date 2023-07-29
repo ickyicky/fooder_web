@@ -14,60 +14,29 @@ class MainScreen extends BasedScreen {
 }
 
 class _MainScreen extends State<MainScreen> {
+  Diary? diary;
+
   @override
   Widget build(BuildContext context) {
-    var testDiary = Diary(
-      meals: <Meal>[
-        Meal(
-          entries: <Entry>[
-            Entry(
-              name: "DUPA",
-              calories: 123.21,
-              protein: 20.13,
-              fat: 99.99,
-              carb: -15.02,
-            ),
-            Entry(
-              name: "SRAKA",
-              calories: 123.21,
-              protein: 20.13,
-              fat: 99.99,
-              carb: -15.02,
-            ),
-          ]
-        ),
-        Meal(
-          entries: <Entry>[
-            Entry(
-              name: "MADA",
-              calories: 123.21,
-              protein: 20.13,
-              fat: 99.99,
-              carb: -15.02,
-            ),
-            Entry(
-              name: "FAKA",
-              calories: 123.21,
-              protein: 20.13,
-              fat: 99.99,
-              carb: -15.02,
-            ),
-          ]
-        ),
-      ]
-    );
-     
+    var content;
+
+    if (diary != null) {
+        content = Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          padding: const EdgeInsets.all(10),
+          child: DiaryWidget(diary: diary!),
+        );
+    } else {
+      content = const CircularProgressIndicator();
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("FOODER"),
       ),
       body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 600),
-          padding: const EdgeInsets.all(10),
-          child: DiaryWidget(diary: testDiary),
-        ),
+        child: content,
       ),
     );
   }

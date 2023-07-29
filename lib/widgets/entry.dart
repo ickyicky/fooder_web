@@ -12,7 +12,7 @@ class EntryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      child: Text(entry.name),
+      child: Text(entry.product.name),
     );
   }
 }
