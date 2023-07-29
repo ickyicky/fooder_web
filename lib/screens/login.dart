@@ -43,7 +43,7 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void popMeDady() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => MainScreen(apiClient: widget.apiClient),
@@ -64,6 +64,7 @@ class _LoginScreen extends State<LoginScreen> {
       showError(e.toString());
     }
   }
+
   @override
   void initState () {
     super.initState();
@@ -71,8 +72,6 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   Future<void> _asyncInitState() async {
-    super.initState();
-
     try {
       await widget.apiClient.refresh();
       showText("Welcome back!");

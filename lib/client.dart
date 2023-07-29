@@ -20,15 +20,18 @@ class ApiClient {
     }
   }
 
-  Map<String, String> headers() {
+  Map<String, String> headers({bool forGet = false}) {
     if (token == null) {
       throw Exception('Not logged in');
     }
 
     final headers = {
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
+
+    if (!forGet) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     if (token != null) {
       headers['Authorization'] = 'Bearer $token';
@@ -40,7 +43,7 @@ class ApiClient {
   Future<Map<String, dynamic>> get(String path) async {
     final response = await httpClient.get(
       Uri.parse('$baseUrl$path'),
-      headers: headers(),
+      headers: headers(forGet: true),
     );
 
     if (response.statusCode != 200) {
@@ -136,5 +139,9 @@ class ApiClient {
     window.localStorage['token'] = token!;
     refreshToken = response['refresh_token'] as String;
     window.localStorage['refreshToken'] = refreshToken!;
+  }
+
+  Future<Map<String, dynamic>> getDiary() async {
+    return await get("/diary?date=2023-07-29");
   }
 }

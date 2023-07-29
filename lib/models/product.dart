@@ -6,7 +6,7 @@ class Product {
   final double carb;
   final double fat;
 
-  const Product({
+  Product({
     required this.id,
     required this.name,
     required this.calories,

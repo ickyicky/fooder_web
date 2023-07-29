@@ -17,15 +17,30 @@ class _MainScreen extends State<MainScreen> {
   Diary? diary;
 
   @override
+  void initState () {
+    super.initState();
+    _asyncInitState().then((value) => null);
+  }
+
+  Future<void> _asyncInitState() async {
+    var diaryMap = await widget.apiClient.getDiary();
+    setState(() {
+      diary = Diary.fromJson(diaryMap);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var content;
+    var title = "FOODER";
 
     if (diary != null) {
-        content = Container(
-          constraints: const BoxConstraints(maxWidth: 600),
-          padding: const EdgeInsets.all(10),
-          child: DiaryWidget(diary: diary!),
-        );
+      content = Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        padding: const EdgeInsets.all(10),
+        child: DiaryWidget(diary: diary!),
+      );
+      title = "FOODER - ${diary!.date.year}-${diary!.date.month}-${diary!.date.day}";
     } else {
       content = const CircularProgressIndicator();
     }
@@ -33,7 +48,7 @@ class _MainScreen extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("FOODER"),
+        title: Text(title),
       ),
       body: Center(
         child: content,

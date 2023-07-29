@@ -20,6 +20,7 @@ class DiaryWidget extends StatelessWidget {
             MealWidget(
               meal: meal,
               ),
+            Text(diary.date.toString()),
         ],
       ),
     );

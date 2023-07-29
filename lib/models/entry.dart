@@ -11,7 +11,7 @@ class Entry {
   final double carb;
 
 
-  const Entry({
+  Entry({
     required this.id,
     required this.grams,
     required this.product,
