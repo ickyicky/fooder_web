@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
 import 'package:fooder_web/screens/login.dart';
 import 'package:fooder_web/client.dart';
+import 'package:fooder_web/models/meal.dart';
+import 'package:fooder_web/models/entry.dart';
+import 'package:fooder_web/models/diary.dart';
+import 'package:fooder_web/widgets/diary.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -49,6 +53,47 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var testDiary = Diary(
+      meals: <Meal>[
+        Meal(
+          entries: <Entry>[
+            Entry(
+              name: "DUPA",
+              calories: 123.21,
+              protein: 20.13,
+              fat: 99.99,
+              carb: -15.02,
+            ),
+            Entry(
+              name: "SRAKA",
+              calories: 123.21,
+              protein: 20.13,
+              fat: 99.99,
+              carb: -15.02,
+            ),
+          ]
+        ),
+        Meal(
+          entries: <Entry>[
+            Entry(
+              name: "MADA",
+              calories: 123.21,
+              protein: 20.13,
+              fat: 99.99,
+              carb: -15.02,
+            ),
+            Entry(
+              name: "FAKA",
+              calories: 123.21,
+              protein: 20.13,
+              fat: 99.99,
+              carb: -15.02,
+            ),
+          ]
+        ),
+      ]
+    );
+     
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -58,15 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 600),
           padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-               FilledButton(
-                onPressed: _login,
-                child: const Text('Login'),
-              )
-            ],
-          ),
+          child: DiaryWidget(diary: testDiary),
         ),
       ),
     );
