@@ -211,4 +211,12 @@ class ApiClient {
       throw Exception("Failed to register");
     }
   }
+
+  Future<void> addMeal({required String name, required int diaryId, required int order}) async {
+    await post("/meal", {
+      "name": name,
+      "diary_id": diaryId,
+      "order": order,
+    });
+  }
 }

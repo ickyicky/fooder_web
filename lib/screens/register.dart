@@ -71,7 +71,7 @@ class _RegisterScreen extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("FOODER"),
+        title: const Text("🅵🅾🅾🅳🅴🆁"),
       ),
       body: Center(
         child: Container(

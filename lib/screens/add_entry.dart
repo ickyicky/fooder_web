@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fooder_web/screens/based.dart';
 import 'package:fooder_web/models/product.dart';
 import 'package:fooder_web/models/diary.dart';
+import 'package:fooder_web/models/meal.dart';
 import 'package:fooder_web/widgets/product.dart';
 
 
@@ -18,6 +20,7 @@ class AddEntryScreen extends BasedScreen {
 class _AddEntryScreen extends State<AddEntryScreen> {
   final gramsController = TextEditingController();
   final productNameController = TextEditingController();
+  Meal? meal;
   List<Product> products = [];
 
   @override
@@ -36,6 +39,9 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   @override
   void initState () {
     super.initState();
+    setState(() {
+      meal = widget.diary.meals[0];
+    });
     _getProducts().then((value) => null);
   }
 
@@ -90,10 +96,33 @@ class _AddEntryScreen extends State<AddEntryScreen> {
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
+              DropdownButton<Meal>(
+                value: meal,
+                // Callback that sets the selected popup menu item.
+                onChanged: (Meal? meal) {
+                  if (meal == null) {
+                    return;
+                  }
+                  setState(() {
+                    this.meal = meal;
+                  });
+                },
+                items: <DropdownMenuItem<Meal>>[
+                  for (var meal in widget.diary.meals)
+                    DropdownMenuItem<Meal>(
+                      value: meal,
+                      child: Text(meal.name),
+                    ),
+                ],
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Grams',
                 ),
+                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                ],
                 controller: gramsController,
               ),
               TextFormField(
@@ -108,6 +137,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 onTap: () {
                   setState(() {
                     products = [product];
+                    productNameController.text = product.name;
                     });
                 },
                 title: ProductWidget(

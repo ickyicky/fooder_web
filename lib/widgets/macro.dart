@@ -8,11 +8,13 @@ class MacroWidget extends StatelessWidget {
   final double carb;
   final double fat;
   final TextStyle style;
+  final Widget? child;
 
   const MacroWidget({
     Key? key,
     this.calories,
     this.amount,
+    this.child,
     required this.protein,
     required this.carb,
     required this.fat,
@@ -74,7 +76,16 @@ class MacroWidget extends StatelessWidget {
         );
     }
 
-    if (amount == null && calories == null) {
+    if (child != null) {
+      elements.add(
+        Expanded(
+          flex: 1,
+          child: child!,
+          ),
+        );
+    }
+
+    if (amount == null && calories == null && child == null) {
       elements.add(
         Expanded(
           flex: 1,

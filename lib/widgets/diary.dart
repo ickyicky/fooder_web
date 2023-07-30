@@ -3,6 +3,7 @@ import 'package:fooder_web/models/diary.dart';
 import 'package:fooder_web/widgets/meal.dart';
 import 'package:fooder_web/widgets/macro.dart';
 import 'package:fooder_web/client.dart';
+import 'package:fooder_web/screens/add_meal.dart';
 import 'dart:core';
 
 
@@ -21,8 +22,9 @@ class DiaryWidget extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const Spacer(),
+                Spacer(),
                 Text(
                   "${diary.calories.toStringAsFixed(1)} kcal",
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
@@ -40,16 +42,38 @@ class DiaryWidget extends StatelessWidget {
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
               title: MacroWidget(
-                protein: diary.protein,
-                carb: diary.carb,
-                fat: diary.fat,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onSecondary,
-                  fontWeight: FontWeight.bold,
+                  protein: diary.protein,
+                  carb: diary.carb,
+                  fat: diary.fat,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddMealScreen(
+                            apiClient: apiClient,
+                            diary: diary,
+                          ),
+                        ),
+                      ).then((_) {
+                        refreshParent();
+                      });
+                    },
+                    child: Text(
+                      "Add meal",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              )
             ),
-          ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
