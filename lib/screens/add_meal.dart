@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/models/diary.dart';
+import 'package:fooder/screens/based.dart';
+import 'package:fooder/models/diary.dart';
 
 
 class AddMealScreen extends BasedScreen {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/models/entry.dart';
-import 'package:fooder_web/widgets/macro.dart';
+import 'package:fooder/models/entry.dart';
+import 'package:fooder/widgets/macro.dart';
 import 'dart:core';
 
 

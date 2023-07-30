@@ -1,4 +1,4 @@
-import 'package:fooder_web/models/product.dart';
+import 'package:fooder/models/product.dart';
 
 class Entry {
   final int id;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/screens/based.dart';
+import 'package:flutter/services.dart';
+import 'package:fooder/screens/based.dart';
 
 
 class RegisterScreen extends BasedScreen {
@@ -21,6 +22,18 @@ class _RegisterScreen extends State<RegisterScreen> {
     passwordController.dispose();
     passwordConfirmController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
+      'setAuthenticationConfiguration': true,
+      'setAutofillHints': <String>[
+        AutofillHints.username,
+        AutofillHints.password,
+      ],
+    });
   }
 
   void showError(String message)
@@ -85,6 +98,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                   labelText: 'Username',
                 ),
                 controller: usernameController,
+                autofillHints: const [AutofillHints.username],
               ),
               TextFormField(
                 obscureText: true,
@@ -92,6 +106,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                   labelText: 'Password',
                 ),
                 controller: passwordController,
+                autofillHints: const [AutofillHints.password],
               ),
               TextFormField(
                 obscureText: true,

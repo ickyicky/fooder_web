@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/models/product.dart';
-import 'package:fooder_web/models/entry.dart';
-import 'package:fooder_web/widgets/product.dart';
-import 'package:fooder_web/screens/add_product.dart';
+import 'package:fooder/screens/based.dart';
+import 'package:fooder/models/product.dart';
+import 'package:fooder/models/entry.dart';
+import 'package:fooder/widgets/product.dart';
+import 'package:fooder/screens/add_product.dart';
 
 
 class EditEntryScreen extends BasedScreen {

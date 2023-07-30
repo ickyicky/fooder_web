@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/models/diary.dart';
-import 'package:fooder_web/widgets/meal.dart';
-import 'package:fooder_web/widgets/macro.dart';
-import 'package:fooder_web/client.dart';
-import 'package:fooder_web/screens/add_meal.dart';
+import 'package:fooder/models/diary.dart';
+import 'package:fooder/widgets/meal.dart';
+import 'package:fooder/widgets/macro.dart';
+import 'package:fooder/client.dart';
+import 'package:fooder/screens/add_meal.dart';
 import 'dart:core';
 
 

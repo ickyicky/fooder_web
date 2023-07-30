@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/models/product.dart';
+import 'package:fooder/screens/based.dart';
+import 'package:fooder/models/product.dart';
 
 
 class AddProductScreen extends BasedScreen {

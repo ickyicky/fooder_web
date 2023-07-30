@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/screens/main.dart';
-import 'package:fooder_web/screens/register.dart';
+import 'package:flutter/services.dart';
+import 'package:fooder/screens/based.dart';
+import 'package:fooder/screens/main.dart';
+import 'package:fooder/screens/register.dart';
 
 
 class LoginScreen extends BasedScreen {
@@ -69,6 +70,13 @@ class _LoginScreen extends State<LoginScreen> {
   @override
   void initState () {
     super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
+      'setAuthenticationConfiguration': true,
+      'setAutofillHints': <String>[
+        AutofillHints.username,
+        AutofillHints.password,
+      ],
+    });
     _asyncInitState().then((value) => null);
   }
 
@@ -105,6 +113,7 @@ class _LoginScreen extends State<LoginScreen> {
                   labelText: 'Username',
                 ),
                 controller: usernameController,
+                autofillHints: const [AutofillHints.username],
               ),
               TextFormField(
                 obscureText: true,
@@ -112,7 +121,8 @@ class _LoginScreen extends State<LoginScreen> {
                   labelText: 'Password',
                 ),
                 controller: passwordController,
-                onFieldSubmitted: (_) => _login()
+                onFieldSubmitted: (_) => _login(),
+                autofillHints: const [AutofillHints.password],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),

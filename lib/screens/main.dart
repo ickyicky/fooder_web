@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/screens/login.dart';
-import 'package:fooder_web/screens/add_entry.dart';
-import 'package:fooder_web/models/diary.dart';
-import 'package:fooder_web/widgets/diary.dart';
+import 'package:fooder/screens/based.dart';
+import 'package:fooder/screens/login.dart';
+import 'package:fooder/screens/add_entry.dart';
+import 'package:fooder/models/diary.dart';
+import 'package:fooder/widgets/diary.dart';
 
 
 class MainScreen extends BasedScreen {

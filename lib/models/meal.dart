@@ -1,4 +1,4 @@
-import 'package:fooder_web/models/entry.dart';
+import 'package:fooder/models/entry.dart';
 
 
 class Meal {

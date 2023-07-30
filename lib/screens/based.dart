@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooder_web/client.dart';
+import 'package:fooder/client.dart';
 
 
 abstract class BasedScreen extends StatefulWidget {
