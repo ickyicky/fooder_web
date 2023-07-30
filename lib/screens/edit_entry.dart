@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
 import 'package:fooder_web/models/product.dart';
-import 'package:fooder_web/models/diary.dart';
+import 'package:fooder_web/models/entry.dart';
 import 'package:fooder_web/widgets/product.dart';
 
 
-class AddEntryScreen extends BasedScreen {
-  final Diary diary;
+class EditEntryScreen extends BasedScreen {
+  final Entry entry;
 
-  const AddEntryScreen({super.key, required super.apiClient, required this.diary});
+  const EditEntryScreen({super.key, required super.apiClient, required this.entry});
 
   @override
-  State<AddEntryScreen> createState() => _AddEntryScreen();
+  State<EditEntryScreen> createState() => _EditEntryScreen();
 }
 
 
-class _AddEntryScreen extends State<AddEntryScreen> {
+class _EditEntryScreen extends State<EditEntryScreen> {
   final gramsController = TextEditingController();
   final productNameController = TextEditingController();
   List<Product> products = [];
@@ -28,15 +28,17 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   }
 
   void popMeDady() {
-    Navigator.pop(
-      context,
-    );
+    Navigator.pop(context);
   }
 
   @override
   void initState () {
     super.initState();
-    _getProducts().then((value) => null);
+    setState(() {
+      gramsController.text = widget.entry.grams.toString();
+      productNameController.text = widget.entry.product.name;
+      products = [widget.entry.product];
+    });
   }
 
   Future<void> _getProducts() async {
@@ -56,7 +58,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
     );
   }
 
-  Future<void> _addEntry() async {
+  Future<void> _saveEntry() async {
     if (products.length != 1) {
       showError("Pick product first");
       return;
@@ -69,11 +71,17 @@ class _AddEntryScreen extends State<AddEntryScreen> {
       return;
     }
 
-    await widget.apiClient.addEntry(
+    await widget.apiClient.updateEntry(
+      widget.entry.id,
       grams: double.parse(gramsController.text),
       productId: products[0].id,
-      mealId: widget.diary.meals[0].id,
+      mealId: widget.entry.mealId,
     );
+    popMeDady();
+  }
+
+  Future<void> _deleteEntry() async {
+    await widget.apiClient.deleteEntry(widget.entry.id);
     popMeDady();
   }
 
@@ -118,9 +126,20 @@ class _AddEntryScreen extends State<AddEntryScreen> {
           )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addEntry,
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: _deleteEntry,
+            heroTag: null,
+            child: const Icon(Icons.delete),
+          ),
+          FloatingActionButton(
+            onPressed: _saveEntry,
+            heroTag: null,
+            child: const Icon(Icons.save),
+          ),
+        ],
       ),
     );
   }

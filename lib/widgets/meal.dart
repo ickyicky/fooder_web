@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/models/meal.dart';
 import 'package:fooder_web/widgets/entry.dart';
+import 'package:fooder_web/widgets/macro.dart';
+import 'package:fooder_web/screens/edit_entry.dart';
+import 'package:fooder_web/client.dart';
 import 'dart:core';
 
 
 class MealWidget extends StatelessWidget {
   final Meal meal;
+  final ApiClient apiClient;
+  final Function() refreshParent;
 
-  const MealWidget({super.key, required this.meal});
+  const MealWidget({super.key, required this.meal, required this.apiClient, required this.refreshParent});
 
   @override
   Widget build(BuildContext context) {
@@ -26,33 +31,39 @@ class MealWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    Text("${meal.calories.toStringAsFixed(2)} kcal"),
+                    Text("${meal.calories.toStringAsFixed(1)} kcal"),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "carb: ${meal.carb.toStringAsFixed(2)}",
-                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    Text(
-                      "fat: ${meal.fat.toStringAsFixed(2)}",
-                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    Text(
-                      "protein: ${meal.protein.toStringAsFixed(2)}",
-                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-                    ),
-                  ],
+                MacroWidget(
+                  protein: meal.protein,
+                  carb: meal.carb,
+                  fat: meal.fat,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                 ),
               ],
             ),
             children: <Widget>[
               for (var entry in meal.entries)
-                EntryWidget(
-                  entry: entry,
+                ListTile(
+                  title: EntryWidget(
+                    entry: entry,
                   ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditEntryScreen(
+                        apiClient: apiClient,
+                        entry: entry,
+                      ),
+                    ),
+                  ).then((_) {
+                    refreshParent();
+                  });
+                },
+                )
           ],
         ),
       ),

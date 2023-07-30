@@ -69,7 +69,7 @@ class _MainScreen extends State<MainScreen> {
       content = Container(
         constraints: const BoxConstraints(maxWidth: 720),
         padding: const EdgeInsets.all(10),
-        child: DiaryWidget(diary: diary!),
+        child: DiaryWidget(diary: diary!, apiClient: widget.apiClient, refreshParent: _asyncInitState),
       );
       title = Row(
         mainAxisAlignment: MainAxisAlignment.center,

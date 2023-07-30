@@ -76,7 +76,7 @@ class ApiClient {
   }
 
 
-  Future<Map<String, dynamic>> delete(String path) async {
+  Future<void> delete(String path) async {
     final response = await httpClient.delete(
       Uri.parse('$baseUrl$path'),
       headers: headers(),
@@ -85,8 +85,6 @@ class ApiClient {
     if (response.statusCode != 200) {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
-
-    return _jsonDecode(response);
   }
 
   Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) async {
@@ -181,5 +179,23 @@ class ApiClient {
       "meal_id": mealId,
     };
     await post("/entry", entry);
+  }
+
+  Future<void> deleteEntry(int id) async {
+    await delete("/entry/$id");
+  }
+
+  Future<void> updateEntry(int id, {
+    required double grams,
+    required int productId,
+    required int mealId,
+  }
+  ) async {
+    var entry = {
+      "grams": grams,
+      "product_id": productId,
+      "meal_id": mealId,
+    };
+    await patch("/entry/$id", entry);
   }
 }

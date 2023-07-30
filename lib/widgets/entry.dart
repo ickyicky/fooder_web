@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/models/entry.dart';
+import 'package:fooder_web/widgets/macro.dart';
 import 'dart:core';
 
 
@@ -22,29 +23,17 @@ class EntryWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              Text("${entry.calories.toStringAsFixed(2)} kcal"),
+              Text("${entry.calories.toStringAsFixed(1)} kcal"),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "carb: ${entry.carb.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-              Text(
-                "fat: ${entry.fat.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-              Text(
-                "protein: ${entry.protein.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-              Text(
-                "amount: ${entry.grams.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-            ],
+          MacroWidget(
+            protein: entry.protein,
+            carb: entry.carb,
+            fat: entry.fat,
+            amount: entry.grams,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
         ],
       ),

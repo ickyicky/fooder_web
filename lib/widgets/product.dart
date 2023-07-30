@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/models/product.dart';
+import 'package:fooder_web/widgets/macro.dart';
 import 'dart:core';
 
 
@@ -22,25 +23,17 @@ class ProductWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              Text("${product.calories.toStringAsFixed(2)} kcal"),
+              Text("${product.calories.toStringAsFixed(1)} kcal"),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "carb: ${product.carb.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-              Text(
-                "fat: ${product.fat.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-              Text(
-                "protein: ${product.protein.toStringAsFixed(2)}",
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-            ],
+          MacroWidget(
+            protein: product.protein,
+            carb: product.carb,
+            fat: product.fat,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
