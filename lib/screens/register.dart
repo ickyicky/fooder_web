@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:fooder_web/screens/based.dart';
-import 'package:fooder_web/screens/main.dart';
-import 'package:fooder_web/screens/register.dart';
 
 
-class LoginScreen extends BasedScreen {
-  const LoginScreen({super.key, required super.apiClient});
+class RegisterScreen extends BasedScreen {
+  const RegisterScreen({super.key, required super.apiClient});
 
   @override
-  State<LoginScreen> createState() => _LoginScreen();
+  State<RegisterScreen> createState() => _RegisterScreen();
 }
 
 
-class _LoginScreen extends State<LoginScreen> {
+class _RegisterScreen extends State<RegisterScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
 
   @override
   void dispose() {
     usernameController.dispose();
     passwordController.dispose();
+    passwordConfirmController.dispose();
     super.dispose();
   }
 
@@ -44,45 +44,25 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void popMeDady() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MainScreen(apiClient: widget.apiClient),
-      ),
-    );
+    Navigator.pop(context);
   }
 
   // login client when button pressed
-  Future<void> _login() async {
-    try {
-      await widget.apiClient.login(
-        usernameController.text,
-        passwordController.text,
-      );
-      showText("Logged in");
-      popMeDady();
-    } on Exception catch (e) {
-      showError(e.toString());
-    }
-  }
-
-  @override
-  void initState () {
-    super.initState();
-    _asyncInitState().then((value) => null);
-  }
-
-  Future<void> _asyncInitState() async {
-    if (widget.apiClient.refreshToken == null) {
+  Future<void> _register() async {
+    if (passwordController.text != passwordConfirmController.text) {
+      showError("Passwords don't match");
       return;
     }
 
     try {
-      await widget.apiClient.refresh();
-      showText("Welcome back!");
+      await widget.apiClient.register(
+        usernameController.text,
+        passwordController.text,
+      );
+      showText("Created account. You can now log in.");
       popMeDady();
-    } on Exception catch (_) {
-      showError("Session is not longer valid, please log in again");
+    } on Exception catch (e) {
+      showError(e.toString());
     }
   }
 
@@ -112,28 +92,21 @@ class _LoginScreen extends State<LoginScreen> {
                   labelText: 'Password',
                 ),
                 controller: passwordController,
-                onFieldSubmitted: (_) => _login()
+              ),
+              TextFormField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Confirm password',
+                ),
+                controller: passwordConfirmController,
+                onFieldSubmitted: (_) => _register()
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: FilledButton(
-                  onPressed: _login,
-                  child: const Text('Login'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(apiClient: widget.apiClient),
-                      ),
-                    );
-                  },
-                  child: const Text('Don\'t have an account? Register here!'),
-                ),
+                  onPressed: _register,
+                  child: const Text('Register'),
+                )
               ),
             ],
           ),

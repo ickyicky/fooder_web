@@ -20,8 +20,8 @@ class ApiClient {
     }
   }
 
-  Map<String, String> headers({bool forGet = false}) {
-    if (token == null) {
+  Map<String, String> headers({bool forGet = false, bool forLogin = false}) {
+    if (token == null && !forLogin) {
       throw Exception('Not logged in');
     }
 
@@ -61,11 +61,11 @@ class ApiClient {
     return _jsonDecode(response);
   }
 
-  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body) async {
+  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool forLogin = false}) async {
     final response = await httpClient.post(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),
-      headers: headers(),
+      headers: headers(forLogin: forLogin),
     );
 
     if (response.statusCode != 200) {
@@ -197,5 +197,18 @@ class ApiClient {
       "meal_id": mealId,
     };
     await patch("/entry/$id", entry);
+  }
+
+  Future<void> register(String username, String password) async {
+    try {
+      await post("/user", {
+          "username": username,
+          "password": password,
+        },
+        forLogin: true,
+      );
+    } catch (e) {
+      throw Exception("Failed to register");
+    }
   }
 }
