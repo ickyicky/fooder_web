@@ -34,7 +34,7 @@ class DiaryWidget extends StatelessWidget {
                 ),
               ]
             ),
-            expandedHeight: 128,
+            expandedHeight: 250,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
