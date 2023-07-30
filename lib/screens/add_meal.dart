@@ -17,6 +17,14 @@ class _AddMealScreen extends State<AddMealScreen> {
   final nameController = TextEditingController();
 
   @override
+  void initState () {
+    super.initState();
+    setState(() {
+      nameController.text = "Meal ${widget.diary.meals.length}";
+    });
+  }
+
+  @override
   void dispose() {
     nameController.dispose();
     super.dispose();

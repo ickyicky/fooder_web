@@ -24,7 +24,7 @@ class DiaryWidget extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Spacer(),
+                const Spacer(),
                 Text(
                   "${diary.calories.toStringAsFixed(1)} kcal",
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
