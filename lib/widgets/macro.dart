@@ -25,7 +25,7 @@ class MacroWidget extends StatelessWidget {
     Expanded(
       flex: 1,
       child: Text(
-        "C: ${carb.toStringAsFixed(1)} g",
+        "C: ${carb.toStringAsFixed(1)}g",
         style: style,
         textAlign: TextAlign.center,
         ),
@@ -33,7 +33,7 @@ class MacroWidget extends StatelessWidget {
     Expanded(
       flex: 1,
       child: Text(
-        "F: ${fat.toStringAsFixed(1)} g",
+        "F: ${fat.toStringAsFixed(1)}g",
         style: style,
         textAlign: TextAlign.center,
         ),
@@ -41,7 +41,7 @@ class MacroWidget extends StatelessWidget {
     Expanded(
       flex: 1,
       child: Text(
-        "P: ${protein.toStringAsFixed(1)} g",
+        "P: ${protein.toStringAsFixed(1)}g",
         style: style,
         textAlign: TextAlign.center,
         ),
@@ -66,7 +66,7 @@ class MacroWidget extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Text(
-            "${amount!.toStringAsFixed(1)} g",
+            "${amount!.toStringAsFixed(1)}g",
             style: style,
             textAlign: TextAlign.center,
             ),
