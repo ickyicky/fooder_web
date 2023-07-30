@@ -105,47 +105,49 @@ class _LoginScreen extends State<LoginScreen> {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 600),
           padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Username',
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Username',
+                  ),
+                  controller: usernameController,
+                  autofillHints: const [AutofillHints.username],
                 ),
-                controller: usernameController,
-                autofillHints: const [AutofillHints.username],
-              ),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  controller: passwordController,
+                  onFieldSubmitted: (_) => _login(),
+                  autofillHints: const [AutofillHints.password],
                 ),
-                controller: passwordController,
-                onFieldSubmitted: (_) => _login(),
-                autofillHints: const [AutofillHints.password],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: FilledButton(
-                  onPressed: _login,
-                  child: const Text('Login'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: FilledButton(
+                    onPressed: _login,
+                    child: const Text('Login'),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(apiClient: widget.apiClient),
-                      ),
-                    );
-                  },
-                  child: const Text('Don\'t have an account? Register here!'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(apiClient: widget.apiClient),
+                        ),
+                      );
+                    },
+                    child: const Text('Don\'t have an account? Register here!'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

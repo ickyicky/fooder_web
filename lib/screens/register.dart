@@ -90,40 +90,43 @@ class _RegisterScreen extends State<RegisterScreen> {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 600),
           padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Username',
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Username',
+                  ),
+                  controller: usernameController,
+                  autofillHints: const [AutofillHints.username],
                 ),
-                controller: usernameController,
-                autofillHints: const [AutofillHints.username],
-              ),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  controller: passwordController,
+                  autofillHints: const [AutofillHints.password],
                 ),
-                controller: passwordController,
-                autofillHints: const [AutofillHints.password],
-              ),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm password',
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm password',
+                  ),
+                  controller: passwordConfirmController,
+                  autofillHints: const [AutofillHints.password],
+                  onFieldSubmitted: (_) => _register()
                 ),
-                controller: passwordConfirmController,
-                onFieldSubmitted: (_) => _register()
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: FilledButton(
-                  onPressed: _register,
-                  child: const Text('Register'),
-                )
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: FilledButton(
+                    onPressed: _register,
+                    child: const Text('Register'),
+                  )
+                ),
+              ],
+            ),
           ),
         ),
       ),
