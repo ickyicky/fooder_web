@@ -34,7 +34,7 @@ class DiaryWidget extends StatelessWidget {
                 ),
               ]
             ),
-            expandedHeight: 250,
+            expandedHeight: 150,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -49,7 +49,7 @@ class DiaryWidget extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSecondary,
                     fontWeight: FontWeight.bold,
                   ),
-                  child: TextButton(
+                  child: IconButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -63,13 +63,11 @@ class DiaryWidget extends StatelessWidget {
                         refreshParent();
                       });
                     },
-                    child: Text(
-                      "Add meal",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  icon: const Icon(Icons.add),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
+                    foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.onSecondary),
+                  ),
                   ),
                 ),
               )
