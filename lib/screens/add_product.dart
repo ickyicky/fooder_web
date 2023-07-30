@@ -16,6 +16,7 @@ class _AddProductScreen extends State<AddProductScreen> {
   final nameController = TextEditingController();
   final carbController = TextEditingController();
   final fatController = TextEditingController();
+  final fiberController = TextEditingController();
   final proteinController = TextEditingController();
 
   @override
@@ -23,6 +24,7 @@ class _AddProductScreen extends State<AddProductScreen> {
     nameController.dispose();
     carbController.dispose();
     fatController.dispose();
+    fiberController.dispose();
     proteinController.dispose();
     super.dispose();
   }
@@ -60,6 +62,13 @@ class _AddProductScreen extends State<AddProductScreen> {
     }
 
     try {
+      double.parse(fiberController.text);
+    } catch (e) {
+      showError("Fiber must be a number");
+      return;
+    }
+
+    try {
       double.parse(proteinController.text);
     } catch (e) {
       showError("Protein must be a number");
@@ -71,6 +80,7 @@ class _AddProductScreen extends State<AddProductScreen> {
         carb: double.parse(carbController.text),
         fat: double.parse(fatController.text),
         protein: double.parse(proteinController.text),
+        fiber: double.parse(fiberController.text),
         name: nameController.text,
       );
       var product = Product.fromJson(productJson);
@@ -98,6 +108,12 @@ class _AddProductScreen extends State<AddProductScreen> {
 
     try {
       calories += double.parse(proteinController.text) * 4;
+    } catch (e) {
+      // ignore
+    }
+
+    try {
+      calories += double.parse(fiberController.text) * 2;
     } catch (e) {
       // ignore
     }
@@ -159,6 +175,19 @@ class _AddProductScreen extends State<AddProductScreen> {
                   FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
                 ],
                 controller: proteinController,
+                onChanged: (String value) {
+                  setState(() {});
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Fiber',
+                ),
+                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                ],
+                controller: fiberController,
                 onChanged: (String value) {
                   setState(() {});
                 },

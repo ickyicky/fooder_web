@@ -8,6 +8,7 @@ class Entry {
   final double calories;
   final double protein;
   final double fat;
+  final double fiber;
   final double carb;
 
 
@@ -19,6 +20,7 @@ class Entry {
     required this.calories,
     required this.protein,
     required this.fat,
+    required this.fiber,
     required this.carb,
   });
 
@@ -30,5 +32,6 @@ class Entry {
     calories = map['calories'] as double,
     protein = map['protein'] as double,
     fat = map['fat'] as double,
+    fiber = map['fiber'] as double,
     carb = map['carb'] as double;
 }

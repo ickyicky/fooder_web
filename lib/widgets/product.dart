@@ -30,6 +30,7 @@ class ProductWidget extends StatelessWidget {
             protein: product.protein,
             carb: product.carb,
             fat: product.fat,
+            fiber: product.fiber,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,

@@ -9,6 +9,7 @@ class Diary {
   final double protein;
   final double carb;
   final double fat;
+  final double fiber;
 
   Diary({
     required this.id,
@@ -18,6 +19,7 @@ class Diary {
     required this.protein,
     required this.carb,
     required this.fat,
+    required this.fiber,
   });
 
   Diary.fromJson(Map<String, dynamic> map):
@@ -27,5 +29,6 @@ class Diary {
     calories = map['calories'] as double,
     protein = map['protein'] as double,
     carb = map['carb'] as double,
-    fat = map['fat'] as double;
+    fat = map['fat'] as double,
+    fiber = map['fiber'] as double;
 }

@@ -5,6 +5,7 @@ class Product {
   final double protein;
   final double carb;
   final double fat;
+  final double fiber;
 
   Product({
     required this.id,
@@ -13,6 +14,7 @@ class Product {
     required this.protein,
     required this.carb,
     required this.fat,
+    required this.fiber,
   });
 
   Product.fromJson(Map<String, dynamic> map):
@@ -21,5 +23,6 @@ class Product {
     calories = map['calories'] as double,
     protein = map['protein'] as double,
     carb = map['carb'] as double,
-    fat = map['fat'] as double;
+    fat = map['fat'] as double,
+    fiber = map['fiber'] as double;
 }

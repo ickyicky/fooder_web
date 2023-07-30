@@ -10,6 +10,7 @@ class Meal {
   final double protein;
   final double carb;
   final double fat;
+  final double fiber;
   final int diaryId;
 
   Meal({
@@ -21,6 +22,7 @@ class Meal {
     required this.protein,
     required this.carb,
     required this.fat,
+    required this.fiber,
     required this.diaryId,
   });
 
@@ -33,5 +35,6 @@ class Meal {
     protein = map['protein'] as double,
     carb = map['carb'] as double,
     fat = map['fat'] as double,
+    fiber = map['fiber'] as double,
     diaryId = map['diary_id'] as int;
 }

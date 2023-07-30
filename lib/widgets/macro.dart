@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class MacroWidget extends StatelessWidget {
   final double? amount;
   final double? calories;
+  final double? fiber;
   final double protein;
   final double carb;
   final double fat;
@@ -15,6 +16,7 @@ class MacroWidget extends StatelessWidget {
     this.calories,
     this.amount,
     this.child,
+    this.fiber,
     required this.protein,
     required this.carb,
     required this.fat,
@@ -50,6 +52,19 @@ class MacroWidget extends StatelessWidget {
       ),
     ];
 
+    if (fiber != null) {
+      elements.add(
+        Expanded(
+          flex: 1,
+          child: Text(
+            "f: ${fiber!.toStringAsFixed(1)}g",
+            style: style,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
     if (calories != null) {
       elements.add(
         Expanded(
@@ -58,9 +73,9 @@ class MacroWidget extends StatelessWidget {
             "${calories!.toStringAsFixed(1)} kcal",
             style: style,
             textAlign: TextAlign.center,
-            ),
           ),
-        );
+        ),
+      );
     }
 
     if (amount != null) {
@@ -72,8 +87,8 @@ class MacroWidget extends StatelessWidget {
             style: style,
             textAlign: TextAlign.center,
             ),
-          ),
-        );
+        ),
+      );
     }
 
     if (child != null) {
@@ -81,21 +96,17 @@ class MacroWidget extends StatelessWidget {
         Expanded(
           flex: 1,
           child: child!,
-          ),
-        );
+        ),
+      );
     }
 
-    if (amount == null && calories == null && child == null) {
+    if (elements.length < 4) {
       elements.add(
-        Expanded(
+        const Expanded(
           flex: 1,
-          child: Text(
-            "",
-            style: style,
-            textAlign: TextAlign.center,
-            ),
-          ),
-        );
+          child: Text(""),
+        ),
+      );
     }
 
     return Padding(

@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:html';
+import 'package:intl/intl.dart';
 
 
 class ApiClient {
@@ -148,8 +149,9 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> getDiary({required DateTime date}) async {
+    var formatter = DateFormat('yyyy-MM-dd');
     var params = {
-      "date": "${date.year}-${date.month}-${date.day}",
+      "date": formatter.format(date),
     };
     var response = await get("/diary?${Uri(queryParameters: params).query}");
     return response;
@@ -225,12 +227,14 @@ class ApiClient {
     required double protein,
     required double carb,
     required double fat,
+    required double fiber,
   }) async {
     var response = await post("/product", {
       "name": name,
       "protein": protein,
       "carb": carb,
       "fat": fat,
+      "fiber": fiber,
     });
     return response;
   }
