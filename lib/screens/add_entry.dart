@@ -79,7 +79,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
     await widget.apiClient.addEntry(
       grams: double.parse(gramsController.text),
       productId: products[0].id,
-      mealId: widget.diary.meals[0].id,
+      mealId: meal!.id,
     );
     popMeDady();
   }
