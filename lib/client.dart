@@ -219,4 +219,19 @@ class ApiClient {
       "order": order,
     });
   }
+
+  Future<Map<String, dynamic>> addProduct({
+    required String name,
+    required double protein,
+    required double carb,
+    required double fat,
+  }) async {
+    var response = await post("/product", {
+      "name": name,
+      "protein": protein,
+      "carb": carb,
+      "fat": fat,
+    });
+    return response;
+  }
 }

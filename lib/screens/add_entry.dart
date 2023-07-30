@@ -5,6 +5,7 @@ import 'package:fooder_web/models/product.dart';
 import 'package:fooder_web/models/diary.dart';
 import 'package:fooder_web/models/meal.dart';
 import 'package:fooder_web/widgets/product.dart';
+import 'package:fooder_web/screens/add_product.dart';
 
 
 class AddEntryScreen extends BasedScreen {
@@ -131,6 +132,27 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 ),
                 controller: productNameController,
                 onChanged: (_) => _getProducts(),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddProductScreen(
+                        apiClient: widget.apiClient,
+                      ),
+                    ),
+                  ).then((product) {
+                    if (product == null) {
+                      return;
+                    }
+                    setState(() {
+                      products = [product];
+                      productNameController.text = product.name;
+                    });
+                  });
+                },
+                child: const Text("Don't see your product? Add it!"),
               ),
               for (var product in products)
                 ListTile(
