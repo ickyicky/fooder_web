@@ -61,22 +61,29 @@ class _EditEntryScreen extends State<EditEntryScreen> {
     );
   }
 
+  Future<double?> _parseDouble(String text, String name) async {
+    try {
+      return double.parse(text.replaceAll(",", "."));
+    } catch (e) {
+      showError("$name must be a number");
+      return null;
+    }
+  }
+
   Future<void> _saveEntry() async {
     if (products.length != 1) {
       showError("Pick product first");
       return;
     }
 
-    try {
-      double.parse(gramsController.text);
-    } catch (e) {
-      showError("Grams must be a number");
+    var grams = await _parseDouble(gramsController.text, "Grams");
+    if (grams == null) {
       return;
     }
 
     await widget.apiClient.updateEntry(
       widget.entry.id,
-      grams: double.parse(gramsController.text),
+      grams: grams,
       productId: products[0].id,
       mealId: widget.entry.mealId,
     );
@@ -107,7 +114,7 @@ class _EditEntryScreen extends State<EditEntryScreen> {
                 ),
                 keyboardType:const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
               ),

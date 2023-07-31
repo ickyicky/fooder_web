@@ -46,41 +46,31 @@ class _AddProductScreen extends State<AddProductScreen> {
     );
   }
 
+  Future<double?> _parseDouble(String text, String name) async {
+    try {
+      return double.parse(text.replaceAll(",", "."));
+    } catch (e) {
+      showError("$name must be a number");
+      return null;
+    }
+  }
+
   Future<void> _addProduct() async {
-    try {
-      double.parse(carbController.text);
-    } catch (e) {
-      showError("Carbs must be a number");
-      return;
-    }
+    var carb = await _parseDouble(carbController.text, "Carbs");
+    var fat = await _parseDouble(fatController.text, "Fat");
+    var protein = await _parseDouble(proteinController.text, "Protein");
+    var fiber = await _parseDouble(fiberController.text, "Fiber");
 
-    try {
-      double.parse(fatController.text);
-    } catch (e) {
-      showError("Fat must be a number");
-      return;
-    }
-
-    try {
-      double.parse(fiberController.text);
-    } catch (e) {
-      showError("Fiber must be a number");
-      return;
-    }
-
-    try {
-      double.parse(proteinController.text);
-    } catch (e) {
-      showError("Protein must be a number");
+    if (carb == null || fat == null || protein == null || fiber == null) {
       return;
     }
 
     try {
       var productJson = await widget.apiClient.addProduct(
-        carb: double.parse(carbController.text),
-        fat: double.parse(fatController.text),
-        protein: double.parse(proteinController.text),
-        fiber: double.parse(fiberController.text),
+        carb: carb,
+        fat: fat,
+        protein: protein,
+        fiber: fiber,
         name: nameController.text,
       );
       var product = Product.fromJson(productJson);
@@ -94,28 +84,25 @@ class _AddProductScreen extends State<AddProductScreen> {
   double calculateCalories() {
     double calories = 0;
 
-    try {
-      calories += double.parse(carbController.text) * 4;
-    } catch (e) {
-      // ignore
+    var carb = double.tryParse(carbController.text.replaceAll(",", "."));
+    var fat = double.tryParse(fatController.text.replaceAll(",", "."));
+    var protein = double.tryParse(proteinController.text.replaceAll(",", "."));
+    var fiber = double.tryParse(fiberController.text.replaceAll(",", "."));
+
+    if (carb != null) {
+      calories += carb * 4;
     }
 
-    try {
-      calories += double.parse(fatController.text) * 9;
-    } catch (e) {
-      // ignore
+    if (fat != null) {
+      calories += fat * 9;
     }
 
-    try {
-      calories += double.parse(proteinController.text) * 4;
-    } catch (e) {
-      // ignore
+    if (protein != null) {
+      calories += protein * 4;
     }
 
-    try {
-      calories += double.parse(fiberController.text) * 2;
-    } catch (e) {
-      // ignore
+    if (fiber != null) {
+      calories -= fiber * 2;
     }
 
     return calories;
@@ -146,7 +133,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 ),
                 keyboardType:const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: carbController,
                 onChanged: (String value) {
@@ -159,7 +146,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 ),
                 keyboardType:const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: fatController,
                 onChanged: (String value) {
@@ -172,7 +159,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 ),
                 keyboardType:const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: proteinController,
                 onChanged: (String value) {
@@ -185,7 +172,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 ),
                 keyboardType:const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: fiberController,
                 onChanged: (String value) {
@@ -193,7 +180,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 },
               ),
               Text(
-                "${calculateCalories()} kcal",
+                "${calculateCalories().toStringAsFixed(2)} kcal",
                 textAlign: TextAlign.right,
               ),
             ]
