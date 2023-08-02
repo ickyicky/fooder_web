@@ -74,7 +74,15 @@ class _MainScreen extends State<MainScreen> {
       title = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text("🅵🅾🅾🅳🅴🆁"),
+          TextButton(
+            child: const Text("🅵🅾🅾🅳🅴🆁", style: const TextStyle(fontSize: 20, color: Colors.white)),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen(apiClient: widget.apiClient)),
+              ).then((_) => _asyncInitState());
+            },
+          ),
           const Spacer(),
           Text(
             "${date.year}-${date.month}-${date.day}",
