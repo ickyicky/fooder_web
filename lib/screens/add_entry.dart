@@ -133,6 +133,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 ],
                 controller: gramsController,
                 onFieldSubmitted: (_) => _addEntry(),
+                autofocus: true,
               ),
               TextFormField(
                 decoration: const InputDecoration(
