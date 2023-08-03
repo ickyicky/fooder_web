@@ -102,7 +102,7 @@ class _AddProductScreen extends State<AddProductScreen> {
     }
 
     if (fiber != null) {
-      calories -= fiber * 2;
+      calories += fiber * 2;
     }
 
     return calories;
