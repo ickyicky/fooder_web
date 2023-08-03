@@ -115,6 +115,7 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                   controller: usernameController,
                   autofillHints: const [AutofillHints.username],
+                  autofocus: true,
                 ),
                 TextFormField(
                   obscureText: true,
