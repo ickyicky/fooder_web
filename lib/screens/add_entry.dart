@@ -132,6 +132,8 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                   FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
+                onFieldSubmitted: (_) => _addEntry(),
+                autofocus: true,
               ),
               TextFormField(
                 decoration: const InputDecoration(
@@ -139,6 +141,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 ),
                 controller: productNameController,
                 onChanged: (_) => _getProducts(),
+                onFieldSubmitted: (_) => _addEntry(),
               ),
               TextButton(
                 onPressed: () {
