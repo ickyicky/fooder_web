@@ -171,6 +171,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                     products = [product];
                     productNameController.text = product.name;
                     });
+                  _addEntry();
                 },
                 title: ProductWidget(
                   product: product,
