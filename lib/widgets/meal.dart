@@ -28,7 +28,9 @@ class MealWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         meal.name,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          ),
                       ),
                     ),
                     Text("${meal.calories.toStringAsFixed(1)} kcal"),
