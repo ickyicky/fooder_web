@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     restart: unless-stopped
-    image: app
+    image: registry.domandoman.xyz/fooder/app
     build:
       dockerfile: Dockerfile
       context: .
