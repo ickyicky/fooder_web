@@ -44,7 +44,7 @@ class _LoginScreen extends State<LoginScreen> {
     );
   }
 
-  void popMeDady() {
+  void popMeDaddy() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -61,7 +61,7 @@ class _LoginScreen extends State<LoginScreen> {
         passwordController.text,
       );
       showText("Logged in");
-      popMeDady();
+      popMeDaddy();
     } on Exception catch (e) {
       showError(e.toString());
     }
@@ -88,7 +88,7 @@ class _LoginScreen extends State<LoginScreen> {
     try {
       await widget.apiClient.refresh();
       showText("Welcome back!");
-      popMeDady();
+      popMeDaddy();
     } on Exception catch (_) {
       showError("Session is not longer valid, please log in again");
     }

@@ -31,7 +31,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
     super.dispose();
   }
 
-  void popMeDady() {
+  void popMeDaddy() {
     Navigator.pop(
       context,
     );
@@ -63,23 +63,27 @@ class _AddEntryScreen extends State<AddEntryScreen> {
     );
   }
 
-  Future<double?> _parseDouble(String text, String name) async {
+  Future<double?> _parseDouble(String text) async {
     try {
       return double.parse(text.replaceAll(",", "."));
     } catch (e) {
-      showError("$name must be a number");
       return null;
     }
   }
 
-  Future<void> _addEntry() async {
+  Future<void> _addEntry({bool silent = false}) async {
     if (products.length != 1) {
-      showError("Pick product first");
+      if (!silent) {
+        showError("Pick one product");
+      }
       return;
     }
 
-    var grams = await _parseDouble(gramsController.text, "Grams");
+    var grams = await _parseDouble(gramsController.text);
     if (grams == null) {
+      if (!silent) {
+        showError("Grams must be a number");
+      }
       return;
     }
 
@@ -88,7 +92,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
       productId: products[0].id,
       mealId: meal!.id,
     );
-    popMeDady();
+    popMeDaddy();
   }
 
   @override
@@ -171,7 +175,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                     products = [product];
                     productNameController.text = product.name;
                     });
-                  _addEntry();
+                  _addEntry(silent: true);
                 },
                 title: ProductWidget(
                   product: product,

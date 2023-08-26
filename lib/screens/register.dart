@@ -56,7 +56,7 @@ class _RegisterScreen extends State<RegisterScreen> {
     );
   }
 
-  void popMeDady() {
+  void popMeDaddy() {
     Navigator.pop(context);
   }
 
@@ -73,7 +73,7 @@ class _RegisterScreen extends State<RegisterScreen> {
         passwordController.text,
       );
       showText("Created account. You can now log in.");
-      popMeDady();
+      popMeDaddy();
     } on Exception catch (e) {
       showError(e.toString());
     }

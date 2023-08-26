@@ -30,7 +30,7 @@ class _EditEntryScreen extends State<EditEntryScreen> {
     super.dispose();
   }
 
-  void popMeDady() {
+  void popMeDaddy() {
     Navigator.pop(context);
   }
 
@@ -87,12 +87,12 @@ class _EditEntryScreen extends State<EditEntryScreen> {
       productId: products[0].id,
       mealId: widget.entry.mealId,
     );
-    popMeDady();
+    popMeDaddy();
   }
 
   Future<void> _deleteEntry() async {
     await widget.apiClient.deleteEntry(widget.entry.id);
-    popMeDady();
+    popMeDaddy();
   }
 
   @override

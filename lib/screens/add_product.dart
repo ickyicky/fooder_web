@@ -29,7 +29,7 @@ class _AddProductScreen extends State<AddProductScreen> {
     super.dispose();
   }
 
-  void popMeDady(Product product) {
+  void popMeDaddy(Product product) {
     Navigator.pop(
       context,
       product,
@@ -74,7 +74,7 @@ class _AddProductScreen extends State<AddProductScreen> {
         name: nameController.text,
       );
       var product = Product.fromJson(productJson);
-      popMeDady(product);
+      popMeDaddy(product);
     } catch (e) {
       showError("Error adding product, make sure there is no product with the same name");
       return;

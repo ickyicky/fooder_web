@@ -30,7 +30,7 @@ class _AddMealScreen extends State<AddMealScreen> {
     super.dispose();
   }
 
-  void popMeDady() {
+  void popMeDaddy() {
     Navigator.pop(
       context,
     );
@@ -52,7 +52,7 @@ class _AddMealScreen extends State<AddMealScreen> {
       diaryId: widget.diary.id,
       order: widget.diary.meals.length,
     );
-    popMeDady();
+    popMeDaddy();
   }
 
   @override
