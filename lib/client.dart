@@ -55,6 +55,11 @@ class ApiClient {
       headers: headers(forGet: true),
     );
 
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      await refresh();
+      return await get(path);
+    }
+
     if (response.statusCode != 200) {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
@@ -68,6 +73,11 @@ class ApiClient {
       body: jsonEncode(body),
       headers: headers(forLogin: forLogin),
     );
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      await refresh();
+      return await post(path, body, forLogin: forLogin);
+    }
 
     if (response.statusCode != 200) {
       throw Exception('Response returned status code: ${response.statusCode}');
@@ -83,6 +93,11 @@ class ApiClient {
       headers: headers(),
     );
 
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      await refresh();
+      return await delete(path);
+    }
+
     if (response.statusCode != 200) {
       throw Exception('Response returned status code: ${response.statusCode}');
     }
@@ -94,6 +109,11 @@ class ApiClient {
       body: jsonEncode(body),
       headers: headers(),
     );
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      await refresh();
+      return await patch(path, body);
+    }
 
     if (response.statusCode != 200) {
       throw Exception('Response returned status code: ${response.statusCode}');
