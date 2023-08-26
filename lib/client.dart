@@ -55,7 +55,7 @@ class ApiClient {
       headers: headers(forGet: true),
     );
 
-    if (response.statusCode == 401 || response.statusCode == 403) {
+    if (response.statusCode == 401) {
       await refresh();
       return await get(path);
     }
@@ -74,7 +74,7 @@ class ApiClient {
       headers: headers(forLogin: forLogin),
     );
 
-    if (response.statusCode == 401 || response.statusCode == 403) {
+    if (response.statusCode == 401) {
       await refresh();
       return await post(path, body, forLogin: forLogin);
     }
@@ -93,7 +93,7 @@ class ApiClient {
       headers: headers(),
     );
 
-    if (response.statusCode == 401 || response.statusCode == 403) {
+    if (response.statusCode == 401) {
       await refresh();
       return await delete(path);
     }
@@ -110,7 +110,7 @@ class ApiClient {
       headers: headers(),
     );
 
-    if (response.statusCode == 401 || response.statusCode == 403) {
+    if (response.statusCode == 401) {
       await refresh();
       return await patch(path, body);
     }
