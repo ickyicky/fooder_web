@@ -5,7 +5,6 @@ import 'package:fooder/screens/add_entry.dart';
 import 'package:fooder/models/diary.dart';
 import 'package:fooder/widgets/diary.dart';
 
-
 class MainScreen extends BasedScreen {
   const MainScreen({super.key, required super.apiClient});
 
@@ -18,7 +17,7 @@ class _MainScreen extends State<MainScreen> {
   DateTime date = DateTime.now();
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
     _asyncInitState().then((value) => null);
   }
@@ -55,7 +54,8 @@ class _MainScreen extends State<MainScreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddEntryScreen(apiClient: widget.apiClient, diary: diary!),
+        builder: (context) =>
+            AddEntryScreen(apiClient: widget.apiClient, diary: diary!),
       ),
     ).then((_) => _asyncInitState());
   }
@@ -69,17 +69,23 @@ class _MainScreen extends State<MainScreen> {
       content = Container(
         constraints: const BoxConstraints(maxWidth: 720),
         padding: const EdgeInsets.all(10),
-        child: DiaryWidget(diary: diary!, apiClient: widget.apiClient, refreshParent: _asyncInitState),
+        child: DiaryWidget(
+            diary: diary!,
+            apiClient: widget.apiClient,
+            refreshParent: _asyncInitState),
       );
       title = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextButton(
-            child: const Text("🅵🅾🅾🅳🅴🆁", style: const TextStyle(fontSize: 20, color: Colors.white)),
+            child: const Text("🅵🅾🅾🅳🅴🆁",
+                style: const TextStyle(fontSize: 20, color: Colors.white)),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MainScreen(apiClient: widget.apiClient)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MainScreen(apiClient: widget.apiClient)),
               ).then((_) => _asyncInitState());
             },
           ),

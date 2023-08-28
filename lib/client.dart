@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:html';
 import 'package:intl/intl.dart';
 
-
 class ApiClient {
   final String baseUrl;
   String? token;
@@ -67,7 +66,8 @@ class ApiClient {
     return _jsonDecode(response);
   }
 
-  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool forLogin = false}) async {
+  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body,
+      {bool forLogin = false}) async {
     final response = await httpClient.post(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),
@@ -86,7 +86,6 @@ class ApiClient {
     return _jsonDecode(response);
   }
 
-
   Future<void> delete(String path) async {
     final response = await httpClient.delete(
       Uri.parse('$baseUrl$path'),
@@ -103,7 +102,8 @@ class ApiClient {
     }
   }
 
-  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) async {
+  Future<Map<String, dynamic>> patch(
+      String path, Map<String, dynamic> body) async {
     final response = await httpClient.patch(
       Uri.parse('$baseUrl$path'),
       body: jsonEncode(body),
@@ -140,7 +140,7 @@ class ApiClient {
     if (response.statusCode != 200) {
       throw Exception('Failed to login');
     }
-    
+
     final token = _jsonDecode(response)['access_token'];
     this.token = token;
     window.localStorage['token'] = token;
@@ -155,12 +155,9 @@ class ApiClient {
       throw Exception("No valid refresh token found");
     }
 
-    final response = await post(
-      "/token/refresh",
-      {
-        "refresh_token": refreshToken,
-      }
-    );
+    final response = await post("/token/refresh", {
+      "refresh_token": refreshToken,
+    });
 
     token = response['access_token'] as String;
     window.localStorage['token'] = token!;
@@ -185,7 +182,8 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> getProducts(String q) async {
-    var response = await get("/product?${Uri(queryParameters: {"q": q}).query}");
+    var response =
+        await get("/product?${Uri(queryParameters: {"q": q}).query}");
     return response;
   }
 
@@ -193,8 +191,7 @@ class ApiClient {
     required double grams,
     required int productId,
     required int mealId,
-  }
-  ) async {
+  }) async {
     var entry = {
       "grams": grams,
       "product_id": productId,
@@ -207,12 +204,12 @@ class ApiClient {
     await delete("/entry/$id");
   }
 
-  Future<void> updateEntry(int id, {
+  Future<void> updateEntry(
+    int id, {
     required double grams,
     required int productId,
     required int mealId,
-  }
-  ) async {
+  }) async {
     var entry = {
       "grams": grams,
       "product_id": productId,
@@ -223,7 +220,9 @@ class ApiClient {
 
   Future<void> register(String username, String password) async {
     try {
-      await post("/user", {
+      await post(
+        "/user",
+        {
           "username": username,
           "password": password,
         },
@@ -234,7 +233,8 @@ class ApiClient {
     }
   }
 
-  Future<void> addMeal({required String name, required int diaryId, required int order}) async {
+  Future<void> addMeal(
+      {required String name, required int diaryId, required int order}) async {
     await post("/meal", {
       "name": name,
       "diary_id": diaryId,

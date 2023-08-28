@@ -17,12 +17,12 @@ class Product {
     required this.fiber,
   });
 
-  Product.fromJson(Map<String, dynamic> map):
-    id = map['id'] as int,
-    name = map['name'] as String,
-    calories = map['calories'] as double,
-    protein = map['protein'] as double,
-    carb = map['carb'] as double,
-    fat = map['fat'] as double,
-    fiber = map['fiber'] as double;
+  Product.fromJson(Map<String, dynamic> map)
+      : id = map['id'] as int,
+        name = map['name'] as String,
+        calories = map['calories'] as double,
+        protein = map['protein'] as double,
+        carb = map['carb'] as double,
+        fat = map['fat'] as double,
+        fiber = map['fiber'] as double;
 }

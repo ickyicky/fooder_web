@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fooder/screens/login.dart';
 import 'package:fooder/client.dart';
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 void main() {
   runApp(const MyApp());

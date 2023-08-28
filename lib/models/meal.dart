@@ -1,6 +1,5 @@
 import 'package:fooder/models/entry.dart';
 
-
 class Meal {
   final List<Entry> entries;
   final int id;
@@ -26,15 +25,17 @@ class Meal {
     required this.diaryId,
   });
 
-  Meal.fromJson(Map<String, dynamic> map):
-    entries = (map['entries'] as List<dynamic>).map((e) => Entry.fromJson(e as Map<String, dynamic>)).toList(),
-    id = map['id'] as int,
-    name = map['name'] as String,
-    order = map['order'] as int,
-    calories = map['calories'] as double,
-    protein = map['protein'] as double,
-    carb = map['carb'] as double,
-    fat = map['fat'] as double,
-    fiber = map['fiber'] as double,
-    diaryId = map['diary_id'] as int;
+  Meal.fromJson(Map<String, dynamic> map)
+      : entries = (map['entries'] as List<dynamic>)
+            .map((e) => Entry.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        id = map['id'] as int,
+        name = map['name'] as String,
+        order = map['order'] as int,
+        calories = map['calories'] as double,
+        protein = map['protein'] as double,
+        carb = map['carb'] as double,
+        fat = map['fat'] as double,
+        fiber = map['fiber'] as double,
+        diaryId = map['diary_id'] as int;
 }

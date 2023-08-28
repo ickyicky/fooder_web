@@ -3,7 +3,6 @@ import 'package:fooder/models/product.dart';
 import 'package:fooder/widgets/macro.dart';
 import 'dart:core';
 
-
 class ProductWidget extends StatelessWidget {
   final Product product;
 
@@ -32,9 +31,9 @@ class ProductWidget extends StatelessWidget {
             fat: product.fat,
             fiber: product.fiber,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ],
       ),

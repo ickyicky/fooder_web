@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fooder/screens/based.dart';
 
-
 class RegisterScreen extends BasedScreen {
   const RegisterScreen({super.key, required super.apiClient});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreen();
 }
-
 
 class _RegisterScreen extends State<RegisterScreen> {
   final usernameController = TextEditingController();
@@ -27,7 +25,8 @@ class _RegisterScreen extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChannels.textInput.invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
+    SystemChannels.textInput
+        .invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
       'setAuthenticationConfiguration': true,
       'setAutofillHints': <String>[
         AutofillHints.username,
@@ -36,8 +35,7 @@ class _RegisterScreen extends State<RegisterScreen> {
     });
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -46,8 +44,7 @@ class _RegisterScreen extends State<RegisterScreen> {
     );
   }
 
-  void showText(String text)
-  {
+  void showText(String text) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text, textAlign: TextAlign.center),
@@ -110,21 +107,19 @@ class _RegisterScreen extends State<RegisterScreen> {
                   autofillHints: const [AutofillHints.password],
                 ),
                 TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm password',
-                  ),
-                  controller: passwordConfirmController,
-                  autofillHints: const [AutofillHints.password],
-                  onFieldSubmitted: (_) => _register()
-                ),
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm password',
+                    ),
+                    controller: passwordConfirmController,
+                    autofillHints: const [AutofillHints.password],
+                    onFieldSubmitted: (_) => _register()),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: FilledButton(
-                    onPressed: _register,
-                    child: const Text('Register'),
-                  )
-                ),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: FilledButton(
+                      onPressed: _register,
+                      child: const Text('Register'),
+                    )),
               ],
             ),
           ),

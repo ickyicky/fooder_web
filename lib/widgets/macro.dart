@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MacroWidget extends StatelessWidget {
   final double? amount;
   final double? calories;
@@ -26,28 +25,28 @@ class MacroWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var elements = <Widget>[
-    Expanded(
-      flex: 1,
-      child: Text(
-        "C: ${carb.toStringAsFixed(1)}g",
-        style: style,
-        textAlign: TextAlign.center,
+      Expanded(
+        flex: 1,
+        child: Text(
+          "C: ${carb.toStringAsFixed(1)}g",
+          style: style,
+          textAlign: TextAlign.center,
         ),
       ),
-    Expanded(
-      flex: 1,
-      child: Text(
-        "F: ${fat.toStringAsFixed(1)}g",
-        style: style,
-        textAlign: TextAlign.center,
+      Expanded(
+        flex: 1,
+        child: Text(
+          "F: ${fat.toStringAsFixed(1)}g",
+          style: style,
+          textAlign: TextAlign.center,
         ),
       ),
-    Expanded(
-      flex: 1,
-      child: Text(
-        "P: ${protein.toStringAsFixed(1)}g",
-        style: style,
-        textAlign: TextAlign.center,
+      Expanded(
+        flex: 1,
+        child: Text(
+          "P: ${protein.toStringAsFixed(1)}g",
+          style: style,
+          textAlign: TextAlign.center,
         ),
       ),
     ];
@@ -86,7 +85,7 @@ class MacroWidget extends StatelessWidget {
             "${amount!.toStringAsFixed(1)}g",
             style: style,
             textAlign: TextAlign.center,
-            ),
+          ),
         ),
       );
     }

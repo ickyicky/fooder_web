@@ -3,14 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:fooder/screens/based.dart';
 import 'package:fooder/models/product.dart';
 
-
 class AddProductScreen extends BasedScreen {
   const AddProductScreen({super.key, required super.apiClient});
 
   @override
   State<AddProductScreen> createState() => _AddProductScreen();
 }
-
 
 class _AddProductScreen extends State<AddProductScreen> {
   final nameController = TextEditingController();
@@ -36,8 +34,7 @@ class _AddProductScreen extends State<AddProductScreen> {
     );
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -76,7 +73,8 @@ class _AddProductScreen extends State<AddProductScreen> {
       var product = Product.fromJson(productJson);
       popMeDaddy(product);
     } catch (e) {
-      showError("Error adding product, make sure there is no product with the same name");
+      showError(
+          "Error adding product, make sure there is no product with the same name");
       return;
     }
   }
@@ -117,10 +115,9 @@ class _AddProductScreen extends State<AddProductScreen> {
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 720),
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
+            constraints: const BoxConstraints(maxWidth: 720),
+            padding: const EdgeInsets.all(10),
+            child: Column(children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Product name',
@@ -131,9 +128,11 @@ class _AddProductScreen extends State<AddProductScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Carbs',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: carbController,
                 onChanged: (String value) {
@@ -144,9 +143,11 @@ class _AddProductScreen extends State<AddProductScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Fat',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: fatController,
                 onChanged: (String value) {
@@ -157,9 +158,11 @@ class _AddProductScreen extends State<AddProductScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Protein',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: proteinController,
                 onChanged: (String value) {
@@ -170,9 +173,11 @@ class _AddProductScreen extends State<AddProductScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Fiber',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: fiberController,
                 onChanged: (String value) {
@@ -183,9 +188,7 @@ class _AddProductScreen extends State<AddProductScreen> {
                 "${calculateCalories().toStringAsFixed(2)} kcal",
                 textAlign: TextAlign.right,
               ),
-            ]
-          )
-        ),
+            ])),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addProduct,

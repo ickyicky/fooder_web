@@ -11,7 +11,6 @@ class Entry {
   final double fiber;
   final double carb;
 
-
   Entry({
     required this.id,
     required this.grams,
@@ -24,14 +23,14 @@ class Entry {
     required this.carb,
   });
 
-  Entry.fromJson(Map<String, dynamic> map):
-    id = map['id'] as int,
-    grams = map['grams'] as double,
-    product = Product.fromJson(map['product'] as Map<String, dynamic>),
-    mealId = map['meal_id'] as int,
-    calories = map['calories'] as double,
-    protein = map['protein'] as double,
-    fat = map['fat'] as double,
-    fiber = map['fiber'] as double,
-    carb = map['carb'] as double;
+  Entry.fromJson(Map<String, dynamic> map)
+      : id = map['id'] as int,
+        grams = map['grams'] as double,
+        product = Product.fromJson(map['product'] as Map<String, dynamic>),
+        mealId = map['meal_id'] as int,
+        calories = map['calories'] as double,
+        protein = map['protein'] as double,
+        fat = map['fat'] as double,
+        fiber = map['fiber'] as double,
+        carb = map['carb'] as double;
 }

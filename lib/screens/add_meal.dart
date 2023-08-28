@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:fooder/screens/based.dart';
 import 'package:fooder/models/diary.dart';
 
-
 class AddMealScreen extends BasedScreen {
   final Diary diary;
 
-  const AddMealScreen({super.key, required super.apiClient, required this.diary});
+  const AddMealScreen(
+      {super.key, required super.apiClient, required this.diary});
 
   @override
   State<AddMealScreen> createState() => _AddMealScreen();
 }
 
-
 class _AddMealScreen extends State<AddMealScreen> {
   final nameController = TextEditingController();
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
     setState(() {
       nameController.text = "Meal ${widget.diary.meals.length}";
@@ -36,8 +35,7 @@ class _AddMealScreen extends State<AddMealScreen> {
     );
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -63,17 +61,16 @@ class _AddMealScreen extends State<AddMealScreen> {
         title: const Text("🅵🅾🅾🅳🅴🆁"),
       ),
       body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 720),
-          padding: const EdgeInsets.all(10),
-          child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Meal name',
-              ),
-              controller: nameController,
-            ),
-          )
+          child: Container(
+        constraints: const BoxConstraints(maxWidth: 720),
+        padding: const EdgeInsets.all(10),
+        child: TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Meal name',
+          ),
+          controller: nameController,
         ),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _addMeal,
         child: const Icon(Icons.add),

@@ -7,16 +7,15 @@ import 'package:fooder/models/meal.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
 
-
 class AddEntryScreen extends BasedScreen {
   final Diary diary;
 
-  const AddEntryScreen({super.key, required super.apiClient, required this.diary});
+  const AddEntryScreen(
+      {super.key, required super.apiClient, required this.diary});
 
   @override
   State<AddEntryScreen> createState() => _AddEntryScreen();
 }
-
 
 class _AddEntryScreen extends State<AddEntryScreen> {
   final gramsController = TextEditingController();
@@ -38,7 +37,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   }
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
     setState(() {
       meal = widget.diary.meals[0];
@@ -47,14 +46,16 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   }
 
   Future<void> _getProducts() async {
-    var productsMap = await widget.apiClient.getProducts(productNameController.text);
+    var productsMap =
+        await widget.apiClient.getProducts(productNameController.text);
     setState(() {
-      products = (productsMap['products'] as List<dynamic>).map((e) => Product.fromJson(e as Map<String, dynamic>)).toList();
+      products = (productsMap['products'] as List<dynamic>)
+          .map((e) => Product.fromJson(e as Map<String, dynamic>))
+          .toList();
     });
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -104,10 +105,9 @@ class _AddEntryScreen extends State<AddEntryScreen> {
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 720),
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            children: <Widget>[
+            constraints: const BoxConstraints(maxWidth: 720),
+            padding: const EdgeInsets.all(10),
+            child: ListView(children: <Widget>[
               DropdownButton<Meal>(
                 value: meal,
                 // Callback that sets the selected popup menu item.
@@ -131,9 +131,11 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Grams',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
                 onFieldSubmitted: (_) => _addEntry(),
@@ -170,20 +172,18 @@ class _AddEntryScreen extends State<AddEntryScreen> {
               ),
               for (var product in products)
                 ListTile(
-                onTap: () {
-                  setState(() {
-                    products = [product];
-                    productNameController.text = product.name;
+                  onTap: () {
+                    setState(() {
+                      products = [product];
+                      productNameController.text = product.name;
                     });
-                  _addEntry(silent: true);
-                },
-                title: ProductWidget(
-                  product: product,
+                    _addEntry(silent: true);
+                  },
+                  title: ProductWidget(
+                    product: product,
+                  ),
                 ),
-              ),
-            ]
-          )
-        ),
+            ])),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addEntry,

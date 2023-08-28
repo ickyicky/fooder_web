@@ -6,22 +6,20 @@ import 'package:fooder/models/entry.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
 
-
 class EditEntryScreen extends BasedScreen {
   final Entry entry;
 
-  const EditEntryScreen({super.key, required super.apiClient, required this.entry});
+  const EditEntryScreen(
+      {super.key, required super.apiClient, required this.entry});
 
   @override
   State<EditEntryScreen> createState() => _EditEntryScreen();
 }
 
-
 class _EditEntryScreen extends State<EditEntryScreen> {
   final gramsController = TextEditingController();
   final productNameController = TextEditingController();
   List<Product> products = [];
-
 
   @override
   void dispose() {
@@ -35,7 +33,7 @@ class _EditEntryScreen extends State<EditEntryScreen> {
   }
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
     setState(() {
       gramsController.text = widget.entry.grams.toString();
@@ -45,14 +43,16 @@ class _EditEntryScreen extends State<EditEntryScreen> {
   }
 
   Future<void> _getProducts() async {
-    var productsMap = await widget.apiClient.getProducts(productNameController.text);
+    var productsMap =
+        await widget.apiClient.getProducts(productNameController.text);
     setState(() {
-      products = (productsMap['products'] as List<dynamic>).map((e) => Product.fromJson(e as Map<String, dynamic>)).toList();
+      products = (productsMap['products'] as List<dynamic>)
+          .map((e) => Product.fromJson(e as Map<String, dynamic>))
+          .toList();
     });
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -104,17 +104,18 @@ class _EditEntryScreen extends State<EditEntryScreen> {
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 720),
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            children: <Widget>[
+            constraints: const BoxConstraints(maxWidth: 720),
+            padding: const EdgeInsets.all(10),
+            child: ListView(children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Grams',
                 ),
-                keyboardType:const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
               ),
@@ -148,19 +149,17 @@ class _EditEntryScreen extends State<EditEntryScreen> {
               ),
               for (var product in products)
                 ListTile(
-                onTap: () {
-                  setState(() {
-                    products = [product];
-                    productNameController.text = product.name;
+                  onTap: () {
+                    setState(() {
+                      products = [product];
+                      productNameController.text = product.name;
                     });
-                },
-                title: ProductWidget(
-                  product: product,
+                  },
+                  title: ProductWidget(
+                    product: product,
+                  ),
                 ),
-              ),
-            ]
-          )
-        ),
+            ])),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,

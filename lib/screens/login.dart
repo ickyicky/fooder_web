@@ -4,14 +4,12 @@ import 'package:fooder/screens/based.dart';
 import 'package:fooder/screens/main.dart';
 import 'package:fooder/screens/register.dart';
 
-
 class LoginScreen extends BasedScreen {
   const LoginScreen({super.key, required super.apiClient});
 
   @override
   State<LoginScreen> createState() => _LoginScreen();
 }
-
 
 class _LoginScreen extends State<LoginScreen> {
   final usernameController = TextEditingController();
@@ -24,8 +22,7 @@ class _LoginScreen extends State<LoginScreen> {
     super.dispose();
   }
 
-  void showError(String message)
-  {
+  void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -34,8 +31,7 @@ class _LoginScreen extends State<LoginScreen> {
     );
   }
 
-  void showText(String text)
-  {
+  void showText(String text) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text, textAlign: TextAlign.center),
@@ -68,9 +64,10 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
-    SystemChannels.textInput.invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
+    SystemChannels.textInput
+        .invokeMethod('TextInput.setClientFeatures', <String, dynamic>{
       'setAuthenticationConfiguration': true,
       'setAutofillHints': <String>[
         AutofillHints.username,
@@ -140,7 +137,8 @@ class _LoginScreen extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => RegisterScreen(apiClient: widget.apiClient),
+                          builder: (context) =>
+                              RegisterScreen(apiClient: widget.apiClient),
                         ),
                       );
                     },

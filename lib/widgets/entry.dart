@@ -3,7 +3,6 @@ import 'package:fooder/models/entry.dart';
 import 'package:fooder/widgets/macro.dart';
 import 'dart:core';
 
-
 class EntryWidget extends StatelessWidget {
   final Entry entry;
 
@@ -32,8 +31,8 @@ class EntryWidget extends StatelessWidget {
             fat: entry.fat,
             amount: entry.grams,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
           ),
         ],
       ),
