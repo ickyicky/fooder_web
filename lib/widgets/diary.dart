@@ -20,6 +20,7 @@ class DiaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 720),
       padding: const EdgeInsets.all(8),
       child: CustomScrollView(
         slivers: <Widget>[
