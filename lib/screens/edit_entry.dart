@@ -109,6 +109,14 @@ class _EditEntryScreen extends State<EditEntryScreen> {
             child: ListView(children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
+                  labelText: 'Product name',
+                ),
+                controller: productNameController,
+                onChanged: (_) => _getProducts(),
+                autofocus: true,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
                   labelText: 'Grams',
                 ),
                 keyboardType:
@@ -118,13 +126,6 @@ class _EditEntryScreen extends State<EditEntryScreen> {
                       RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Product name',
-                ),
-                controller: productNameController,
-                onChanged: (_) => _getProducts(),
               ),
               TextButton(
                 onPressed: () {

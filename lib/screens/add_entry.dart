@@ -129,6 +129,15 @@ class _AddEntryScreen extends State<AddEntryScreen> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
+                  labelText: 'Product name',
+                ),
+                controller: productNameController,
+                onChanged: (_) => _getProducts(),
+                onFieldSubmitted: (_) => _addEntry(),
+                autofocus: true,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
                   labelText: 'Grams',
                 ),
                 keyboardType:
@@ -138,15 +147,6 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                       RegExp(r'^(\d+)?[\.,]?\d{0,2}')),
                 ],
                 controller: gramsController,
-                onFieldSubmitted: (_) => _addEntry(),
-                autofocus: true,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Product name',
-                ),
-                controller: productNameController,
-                onChanged: (_) => _getProducts(),
                 onFieldSubmitted: (_) => _addEntry(),
               ),
               TextButton(
