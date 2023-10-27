@@ -29,6 +29,7 @@ class MealWidget extends StatelessWidget {
             builder: (context) => MealScreen(
               apiClient: apiClient,
               meal: meal,
+              refresh: refreshParent,
             ),
           ),
         ).then((_) {

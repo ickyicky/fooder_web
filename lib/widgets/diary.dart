@@ -57,8 +57,8 @@ class DiaryWidget extends StatelessWidget {
                 ),
               )),
           SliverToBoxAdapter(
-            child: SizedBox(
-              height: 30,
+            child: Container(
+              padding: const EdgeInsets.all(8),
               child: TextButton(
                 onPressed: () {
                   Navigator.push(

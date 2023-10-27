@@ -5,8 +5,9 @@ import 'package:fooder/widgets/macro.dart';
 
 class MealScreen extends BasedScreen {
   final Meal meal;
+  final Function() refresh;
 
-  const MealScreen({super.key, required super.apiClient, required this.meal});
+  const MealScreen({super.key, required super.apiClient, required this.refresh, required this.meal});
 
   @override
   State<MealScreen> createState() => _AddMealScreen();
@@ -69,6 +70,8 @@ class _AddMealScreen extends State<MealScreen> {
               onPressed: () {
                 _deleteMeal(widget.meal);
                 Navigator.pop(context);
+                Navigator.pop(context);
+                widget.refresh();
               },
             ),
           ],
