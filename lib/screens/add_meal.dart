@@ -19,6 +19,7 @@ class _AddMealScreen extends State<AddMealScreen> {
   final presetNameController = TextEditingController();
   bool nameChanged = false;
   List<Preset> presets = [];
+  Preset? selectedPreset;
 
   Future<void> _getPresets() async {
     var presetsMap =
@@ -28,6 +29,7 @@ class _AddMealScreen extends State<AddMealScreen> {
       presets = (presetsMap['presets'] as List<dynamic>)
           .map((e) => Preset.fromJson(e as Map<String, dynamic>))
           .toList();
+      selectedPreset = null;
     });
   }
 
@@ -104,16 +106,16 @@ class _AddMealScreen extends State<AddMealScreen> {
   }
 
   Future<void> _addMealFromPreset() async {
-    if (presets.length != 1) {
+    if (selectedPreset == null) {
       _addMeal();
       return;
     }
 
     await widget.apiClient.addMealFromPreset(
-      name: nameChanged ? nameController.text : presets[0].name,
+      name: nameChanged ? nameController.text : selectedPreset!.name,
       diaryId: widget.diary.id,
       order: widget.diary.meals.length,
-      presetId: presets[0].id,
+      presetId: selectedPreset!.id,
     );
     popMeDaddy();
   }
@@ -152,6 +154,7 @@ class _AddMealScreen extends State<AddMealScreen> {
                   setState(() {
                     presets = [preset];
                     presetNameController.text = preset.name;
+                    selectedPreset = preset;
                   });
                   _addMealFromPreset();
                 },
