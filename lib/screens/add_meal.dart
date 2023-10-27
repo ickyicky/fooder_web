@@ -70,7 +70,14 @@ class _AddMealScreen extends State<AddMealScreen> {
     popMeDaddy();
   }
 
-  Future<void> _deletePreset(context, Preset preset) async {
+  Future<void> _deletePreset(Preset preset) async {
+    widget.apiClient.deletePreset(preset.id);
+    setState(() {
+      presets.remove(preset);
+    });
+  }
+
+  Future<void> deletePreset(context, Preset preset) async {
     showDialog(
       context: context,
       builder: (context) {
@@ -86,7 +93,7 @@ class _AddMealScreen extends State<AddMealScreen> {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                widget.apiClient.deletePreset(preset.id);
+                _deletePreset(preset);
                 Navigator.pop(context);
               },
             ),
@@ -113,8 +120,6 @@ class _AddMealScreen extends State<AddMealScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _getPresets();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -151,7 +156,7 @@ class _AddMealScreen extends State<AddMealScreen> {
                   _addMealFromPreset();
                 },
                 onLongPress: () {
-                  _deletePreset(context, preset);
+                  deletePreset(context, preset);
                 },
                 title: PresetWidget(
                   preset: preset,

@@ -19,6 +19,7 @@ class MealWidget extends StatelessWidget {
 
   Future<void> saveMeal(context) async {
     TextEditingController textFieldController = TextEditingController();
+    textFieldController.text = meal.name;
 
     showDialog(
       context: context,
