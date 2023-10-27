@@ -17,6 +17,69 @@ class MealWidget extends StatelessWidget {
       required this.apiClient,
       required this.refreshParent});
 
+  Future<void> saveMeal(context) async {
+    TextEditingController textFieldController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Save Meal'),
+          content: TextField(
+            controller: textFieldController,
+            decoration: const InputDecoration(hintText: "Meal template name"),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.cancel),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: () {
+                apiClient.saveMeal(meal, textFieldController.text);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteMeal(Meal meal) async {
+    await apiClient.deleteMeal(meal.id);
+    refreshParent();
+  }
+
+  Future<void> deleteMeal(context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirm deletion of the meal'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.cancel),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                _deleteMeal(meal);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -35,6 +98,14 @@ class MealWidget extends StatelessWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {deleteMeal(context);},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.save),
+                    onPressed: () {saveMeal(context);},
                   ),
                   Text("${meal.calories.toStringAsFixed(1)} kcal"),
                 ],

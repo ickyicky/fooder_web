@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:html';
 import 'package:intl/intl.dart';
+import 'package:fooder/models/meal.dart';
 
 class ApiClient {
   final String baseUrl;
@@ -84,6 +85,24 @@ class ApiClient {
     }
 
     return _jsonDecode(response);
+  }
+
+  Future<void> postNoResult(String path, Map<String, dynamic> body,
+      {bool forLogin = false, bool empty = false}) async {
+    final response = await httpClient.post(
+      Uri.parse('$baseUrl$path'),
+      body: jsonEncode(body),
+      headers: headers(forLogin: forLogin),
+    );
+
+    if (response.statusCode == 401) {
+      await refresh();
+      return await postNoResult(path, body, forLogin: forLogin);
+    }
+
+    if (response.statusCode != 200) {
+      throw Exception('Response returned status code: ${response.statusCode}');
+    }
   }
 
   Future<void> delete(String path) async {
@@ -187,6 +206,11 @@ class ApiClient {
     return response;
   }
 
+  Future<Map<String, dynamic>> getPresets(String? q) async {
+    var response = await get("/preset?${Uri(queryParameters: {"q": q}).query}");
+    return response;
+  }
+
   Future<void> addEntry({
     required double grams,
     required int productId,
@@ -202,6 +226,14 @@ class ApiClient {
 
   Future<void> deleteEntry(int id) async {
     await delete("/entry/$id");
+  }
+
+  Future<void> deleteMeal(int id) async {
+    await delete("/meal/$id");
+  }
+
+  Future<void> deletePreset(int id) async {
+    await delete("/preset/$id");
   }
 
   Future<void> updateEntry(
@@ -242,6 +274,16 @@ class ApiClient {
     });
   }
 
+  Future<void> addMealFromPreset(
+      {required String name, required int diaryId, required int order, required int presetId}) async {
+    await post("/meal/from_preset", {
+      "name": name,
+      "diary_id": diaryId,
+      "order": order,
+      "preset_id": presetId,
+    });
+  }
+
   Future<Map<String, dynamic>> addProduct({
     required String name,
     required double protein,
@@ -257,5 +299,11 @@ class ApiClient {
       "fiber": fiber,
     });
     return response;
+  }
+
+  Future<void> saveMeal(Meal meal, String name) async {
+    await postNoResult("/meal/${meal.id}/save", {
+      "name": name,
+    });
   }
 }
