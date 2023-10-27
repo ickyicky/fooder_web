@@ -35,7 +35,7 @@ class _MainScreen extends State<MainScreen> {
       context: context,
       initialDate: date,
       firstDate: DateTime(2020),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(DateTime.now().year + 1),
     ))!;
     await _asyncInitState();
   }
@@ -64,6 +64,7 @@ class _MainScreen extends State<MainScreen> {
   Widget build(BuildContext context) {
     Widget content;
     Widget title;
+    var textStyle = Theme.of(context).textTheme.labelLarge!;
 
     if (diary != null) {
       content = Container(
@@ -78,8 +79,10 @@ class _MainScreen extends State<MainScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextButton(
-            child: const Text("🅵🅾🅾🅳🅴🆁",
-                style: const TextStyle(fontSize: 20, color: Colors.white)),
+            child: Text("🅵🅾🅾🅳🅴🆁",
+                style: textStyle.copyWith(
+                    color: Theme.of(context).colorScheme.secondary)),
+                // style: TextStyle(fontSize: 18, color: Colors.white)),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
