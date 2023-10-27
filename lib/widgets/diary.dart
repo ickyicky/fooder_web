@@ -54,30 +54,29 @@ class DiaryWidget extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onSecondary,
                         fontWeight: FontWeight.bold,
                       ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddMealScreen(
-                            apiClient: apiClient,
-                            diary: diary,
-                          ),
-                        ),
-                      ).then((_) {
-                        refreshParent();
-                      });
-                    },
-                    icon: const Icon(Icons.add),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).colorScheme.secondary),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).colorScheme.onSecondary),
-                    ),
-                  ),
                 ),
               )),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 30,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddMealScreen(
+                        apiClient: apiClient,
+                        diary: diary,
+                      ),
+                    ),
+                  ).then((_) {
+                    refreshParent();
+                  });
+                },
+                child: const Text("Add Meal"),
+              ),
+            ),
+          ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
