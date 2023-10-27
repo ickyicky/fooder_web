@@ -100,7 +100,7 @@ class _EditEntryScreen extends State<EditEntryScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("🅵🅾🅾🅳🅴🆁"),
+        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
       ),
       body: Center(
         child: Container(

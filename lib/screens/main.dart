@@ -64,7 +64,6 @@ class _MainScreen extends State<MainScreen> {
   Widget build(BuildContext context) {
     Widget content;
     Widget title;
-    var textStyle = Theme.of(context).textTheme.labelLarge!;
 
     if (diary != null) {
       content = Container(
@@ -79,10 +78,10 @@ class _MainScreen extends State<MainScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextButton(
-            child: Text("🅵🅾🅾🅳🅴🆁",
-                style: textStyle.copyWith(
-                    color: Theme.of(context).colorScheme.secondary)),
-                // style: TextStyle(fontSize: 18, color: Colors.white)),
+            child: Text(
+              "🅵🅾🅾🅳🅴🆁",
+              style: logoStyle(context),
+            ),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
@@ -110,7 +109,7 @@ class _MainScreen extends State<MainScreen> {
       );
     } else {
       content = const CircularProgressIndicator();
-      title = const Text("🅵🅾🅾🅳🅴🆁");
+      title = Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context));
     }
 
     return Scaffold(
