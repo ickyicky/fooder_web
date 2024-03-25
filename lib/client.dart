@@ -1,23 +1,34 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:html';
 import 'package:intl/intl.dart';
 import 'package:fooder/models/meal.dart';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 class ApiClient {
   final String baseUrl;
   String? token;
   String? refreshToken;
   http.Client httpClient = http.Client();
+  final FlutterSecureStorage storage = FlutterSecureStorage();
 
   ApiClient({
     required this.baseUrl,
   }) {
-    if (window.localStorage.containsKey('token')) {
-      token = window.localStorage['token'];
+    () async {
+      await loadToken();
+    }();
+  }
+
+  Future<void> loadToken() async {
+    Map<String, String> allValues = await storage.readAll();
+
+    if (allValues.containsKey('token')) {
+      token = allValues['token'];
     }
-    if (window.localStorage.containsKey('refreshToken')) {
-      refreshToken = window.localStorage['refreshToken'];
+    if (allValues.containsKey('refreshToken')) {
+      refreshToken = allValues['refreshToken'];
     }
   }
 
@@ -162,11 +173,11 @@ class ApiClient {
 
     final token = _jsonDecode(response)['access_token'];
     this.token = token;
-    window.localStorage['token'] = token;
+    await storage.write(key: 'token', value: token);
 
     final refreshToken = _jsonDecode(response)['refresh_token'];
     this.refreshToken = refreshToken;
-    window.localStorage['refreshToken'] = refreshToken;
+    await storage.write(key: 'refreshToken', value: refreshToken);
   }
 
   Future<void> refresh() async {
@@ -179,9 +190,10 @@ class ApiClient {
     });
 
     token = response['access_token'] as String;
-    window.localStorage['token'] = token!;
+    await storage.write(key: 'token', value: token);
+
     refreshToken = response['refresh_token'] as String;
-    window.localStorage['refreshToken'] = refreshToken!;
+    await storage.write(key: 'refreshToken', value: refreshToken);
   }
 
   Future<Map<String, dynamic>> getDiary({required DateTime date}) async {
@@ -193,11 +205,11 @@ class ApiClient {
     return response;
   }
 
-  void logout() {
+  Future<void> logout() async {
     token = null;
     refreshToken = null;
-    window.localStorage.remove('token');
-    window.localStorage.remove('refreshToken');
+
+    await storage.deleteAll();
   }
 
   Future<Map<String, dynamic>> getProducts(String q) async {
@@ -266,20 +278,18 @@ class ApiClient {
   }
 
   Future<void> addMeal(
-      {required String name, required int diaryId, required int order}) async {
+      {required String name, required int diaryId}) async {
     await post("/meal", {
       "name": name,
       "diary_id": diaryId,
-      "order": order,
     });
   }
 
   Future<void> addMealFromPreset(
-      {required String name, required int diaryId, required int order, required int presetId}) async {
+      {required String name, required int diaryId, required int presetId}) async {
     await post("/meal/from_preset", {
       "name": name,
       "diary_id": diaryId,
-      "order": order,
       "preset_id": presetId,
     });
   }

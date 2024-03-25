@@ -78,6 +78,8 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   Future<void> _asyncInitState() async {
+    await widget.apiClient.loadToken();
+
     if (widget.apiClient.refreshToken == null) {
       return;
     }

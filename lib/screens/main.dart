@@ -41,7 +41,7 @@ class _MainScreen extends State<MainScreen> {
   }
 
   void _logout() async {
-    widget.apiClient.logout();
+    await widget.apiClient.logout();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

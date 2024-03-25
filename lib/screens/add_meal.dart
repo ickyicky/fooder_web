@@ -67,7 +67,6 @@ class _AddMealScreen extends State<AddMealScreen> {
     await widget.apiClient.addMeal(
       name: nameController.text,
       diaryId: widget.diary.id,
-      order: widget.diary.meals.length,
     );
     popMeDaddy();
   }
@@ -114,7 +113,6 @@ class _AddMealScreen extends State<AddMealScreen> {
     await widget.apiClient.addMealFromPreset(
       name: nameChanged ? nameController.text : selectedPreset!.name,
       diaryId: widget.diary.id,
-      order: widget.diary.meals.length,
       presetId: selectedPreset!.id,
     );
     popMeDaddy();
