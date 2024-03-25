@@ -7,8 +7,10 @@ ifeq ($(shell uname -m), arm64)
 DOCKER_BUILD=docker buildx build --platform linux/amd64
 endif
 
+.PHONY: build
 build:
 	$(DOCKER_BUILD) -t registry.domandoman.xyz/fooder/app -f Dockerfile .
 
+.PHONY: push
 push:
 	docker push registry.domandoman.xyz/fooder/app

@@ -218,6 +218,12 @@ class ApiClient {
     return response;
   }
 
+  Future<Map<String, dynamic>> getProductByBarcode(String barcode) async {
+    var response =
+        await get("/product/by_barcode?${Uri(queryParameters: {"barcode": barcode}).query}");
+    return response;
+  }
+
   Future<Map<String, dynamic>> getPresets(String? q) async {
     var response = await get("/preset?${Uri(queryParameters: {"q": q}).query}");
     return response;

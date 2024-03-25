@@ -5,6 +5,7 @@ import 'package:fooder/models/product.dart';
 import 'package:fooder/models/entry.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class EditEntryScreen extends BasedScreen {
   final Entry entry;
@@ -95,6 +96,31 @@ class _EditEntryScreen extends State<EditEntryScreen> {
     popMeDaddy();
   }
 
+  Future<void> _findProductByBarCode() async {
+    var res = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SimpleBarcodeScannerPage(),
+      ),
+    );
+
+    if (res is String) {
+      try {
+        var productMap =
+            await widget.apiClient.getProductByBarcode(res);
+
+        var product = Product.fromJson(productMap);
+
+        setState(() {
+          products = [product];
+          productNameController.text = product.name;
+        });
+      } catch (e) {
+        showError("Product not found");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +191,11 @@ class _EditEntryScreen extends State<EditEntryScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
+          FloatingActionButton(
+            onPressed: _findProductByBarCode,
+            heroTag: null,
+            child: const Icon(Icons.photo_camera),
+          ),
           FloatingActionButton(
             onPressed: _deleteEntry,
             heroTag: null,

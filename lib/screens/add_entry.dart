@@ -6,6 +6,7 @@ import 'package:fooder/models/diary.dart';
 import 'package:fooder/models/meal.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class AddEntryScreen extends BasedScreen {
   final Diary diary;
@@ -94,6 +95,32 @@ class _AddEntryScreen extends State<AddEntryScreen> {
       mealId: meal!.id,
     );
     popMeDaddy();
+  }
+
+
+  Future<void> _findProductByBarCode() async {
+    var res = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SimpleBarcodeScannerPage(),
+      ),
+    );
+
+    if (res is String) {
+      try {
+        var productMap =
+            await widget.apiClient.getProductByBarcode(res);
+
+        var product = Product.fromJson(productMap);
+
+        setState(() {
+          products = [product];
+          productNameController.text = product.name;
+        });
+      } catch (e) {
+        showError("Product not found");
+      }
+    }
   }
 
   @override
@@ -185,9 +212,19 @@ class _AddEntryScreen extends State<AddEntryScreen> {
                 ),
             ])),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addEntry,
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: _findProductByBarCode,
+            heroTag: null,
+            child: const Icon(Icons.photo_camera),
+          ),
+          FloatingActionButton(
+            onPressed: _addEntry,
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }

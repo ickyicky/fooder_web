@@ -1,38 +1,45 @@
-# BUILD
 FROM debian:stable-slim AS build-env
 
-RUN apt-get update && apt-get install -yq curl file git unzip xz-utils zip && rm -rf /var/lib/apt/lists/*
+# install all needed stuff
+RUN apt-get update
+RUN apt-get install -y curl git unzip
 
-RUN useradd -m flutter
-RUN groupadd flutterusers
-RUN usermod -aG flutterusers flutter
-RUN mkdir /opt/flutter && chown -R flutter:flutter /opt/flutter
-USER flutter
-WORKDIR /home/flutter
+# define variables
+ARG FLUTTER_SDK=/usr/local/flutter
+ARG FLUTTER_VERSION=3.10.5
+ARG APP=/app/
 
-RUN git clone https://github.com/flutter/flutter.git /opt/flutter
-ENV PATH $PATH:/opt/flutter/bin
-RUN flutter config --no-analytics --enable-web --no-enable-android --no-enable-ios
-RUN flutter precache --web
-RUN flutter create --platforms web dummy && rm -rf dummy
+#clone flutter
+RUN git clone https://github.com/flutter/flutter.git $FLUTTER_SDK
+# change dir to current flutter folder and make a checkout to the specific version
 
-COPY . /home/flutter
-USER root
-RUN chown -R flutter:flutter /home/flutter
-USER flutter
-WORKDIR /home/flutter
+# setup the flutter path as an enviromental variable
+ENV PATH="$FLUTTER_SDK/bin:$FLUTTER_SDK/bin/cache/dart-sdk/bin:${PATH}"
+
+# Start to run Flutter commands
+# doctor to see if all was installes ok
+RUN flutter doctor -v
+
+# create folder to copy source code
+RUN mkdir $APP
+# copy source code to folder
+COPY . $APP
+# stup new folder as the working directory
+WORKDIR $APP
+
+# Run build: 1 - clean, 2 - pub get, 3 - build web
+RUN flutter clean
+RUN flutter pub get
 RUN flutter build web
 
-# DEPLOY
-FROM node:16.14-alpine
+# once heare the app will be compiled and ready to deploy
 
-COPY --from=build-env /home/flutter/build/web /app/
+# use nginx to deploy
+FROM nginx:1.25.2-alpine
 
-WORKDIR /app/
+# copy the info of the builded web app to nginx
+COPY --from=build-env /app/build/web /usr/share/nginx/html
 
-RUN apk --no-cache add curl
-RUN npm install --global http-server
-
+# Expose and run nginx
 EXPOSE 80
-
-CMD ["npx", "http-server", "-p", "80"]
+CMD ["nginx", "-g", "daemon off;"]
