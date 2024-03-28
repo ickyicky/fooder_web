@@ -7,6 +7,8 @@ import 'package:fooder/models/meal.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
+import 'package:fooder/components/appBar.dart';
+
 
 class AddEntryScreen extends BasedScreen {
   final Diary diary;
@@ -126,10 +128,8 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
-      ),
+      extendBodyBehindAppBar: true,
+      appBar: FAppBar(),
       body: Center(
         child: Container(
             constraints: const BoxConstraints(maxWidth: 720),

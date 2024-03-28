@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:fooder/screens/based.dart';
 import 'package:fooder/screens/main.dart';
 import 'package:fooder/screens/register.dart';
+import 'package:fooder/components/text.dart';
+import 'package:fooder/components/button.dart';
 
 class LoginScreen extends BasedScreen {
   const LoginScreen({super.key, required super.apiClient});
@@ -11,7 +13,7 @@ class LoginScreen extends BasedScreen {
   State<LoginScreen> createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<LoginScreen> {
+class _LoginScreen extends BasedState<LoginScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -20,24 +22,6 @@ class _LoginScreen extends State<LoginScreen> {
     usernameController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  void showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
-    );
-  }
-
-  void showText(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(text, textAlign: TextAlign.center),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-    );
   }
 
   void popMeDaddy() {
@@ -95,11 +79,10 @@ class _LoginScreen extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var colorScheme = theme.colorScheme;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
-      ),
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 600),
@@ -108,32 +91,30 @@ class _LoginScreen extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Username',
-                  ),
+                Icon(
+                  Icons.lock,
+                  size: 100,
+                  color: colorScheme.primary,
+                ),
+                FTextInput(
+                  labelText: 'Username',
                   controller: usernameController,
                   autofillHints: const [AutofillHints.username],
                   autofocus: true,
                 ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                  ),
+                FTextInput(
+                  labelText: 'Password',
                   controller: passwordController,
                   onFieldSubmitted: (_) => _login(),
                   autofillHints: const [AutofillHints.password],
+                  obscureText: true,
+                ),
+                FButton(
+                  labelText: 'Sign In',
+                  onPressed: _login,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: FilledButton(
-                    onPressed: _login,
-                    child: const Text('Login'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(

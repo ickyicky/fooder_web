@@ -4,6 +4,10 @@ import 'package:fooder/screens/login.dart';
 import 'package:fooder/screens/add_entry.dart';
 import 'package:fooder/models/diary.dart';
 import 'package:fooder/widgets/diary.dart';
+import 'package:fooder/widgets/meal.dart';
+import 'package:fooder/components/appBar.dart';
+import 'package:fooder/components/sliver.dart';
+import 'package:fooder/components/datePicker.dart';
 
 class MainScreen extends BasedScreen {
   const MainScreen({super.key, required super.apiClient});
@@ -12,7 +16,7 @@ class MainScreen extends BasedScreen {
   State<MainScreen> createState() => _MainScreen();
 }
 
-class _MainScreen extends State<MainScreen> {
+class _MainScreen extends BasedState<MainScreen> {
   Diary? diary;
   DateTime date = DateTime.now();
 
@@ -24,19 +28,18 @@ class _MainScreen extends State<MainScreen> {
 
   Future<void> _asyncInitState() async {
     var diaryMap = await widget.apiClient.getDiary(date: date);
+
     setState(() {
       diary = Diary.fromJson(diaryMap);
       date = date;
     });
   }
 
-  Future<void> _pickDate() async {
-    date = (await showDatePicker(
-      context: context,
-      initialDate: date,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(DateTime.now().year + 1),
-    ))!;
+  Future<void> _pickDate(DateTime date) async {
+    setState(() {
+      this.date = date;
+    });
+
     await _asyncInitState();
   }
 
@@ -66,60 +69,34 @@ class _MainScreen extends State<MainScreen> {
     Widget title;
 
     if (diary != null) {
-      content = Container(
-        constraints: const BoxConstraints(maxWidth: 720),
-        padding: const EdgeInsets.all(10),
-        child: DiaryWidget(
-            diary: diary!,
-            apiClient: widget.apiClient,
-            refreshParent: _asyncInitState),
-      );
-      title = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          TextButton(
-            child: Text(
-              "🅵🅾🅾🅳🅴🆁",
-              style: logoStyle(context),
+      content = CustomScrollView(
+        slivers: <Widget>[
+          SliverPersistentHeader(
+            delegate: FSliverAppBar(child: FDatePickerWidget(date: date, onDatePicked: _pickDate)),
+            pinned: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                for (var meal in diary!.meals)
+                  MealWidget(
+                    meal: meal,
+                    apiClient: widget.apiClient,
+                    refreshParent: _asyncInitState,
+                  ),
+              ],
             ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        MainScreen(apiClient: widget.apiClient)),
-              ).then((_) => _asyncInitState());
-            },
           ),
-          const Spacer(),
-          Text(
-            "${date.year}-${date.month}-${date.day}",
-            style: const TextStyle(fontSize: 20),
-          ),
-          IconButton(
-            icon: const Icon(Icons.calendar_month),
-            onPressed: _pickDate,
-          ),
-          const Spacer(),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _logout,
-          ),
-        ],
+        ]
       );
     } else {
-      content = const CircularProgressIndicator();
-      title = Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context));
+      content = const Center(child: const CircularProgressIndicator());
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: title,
-      ),
-      body: Center(
-        child: content,
-      ),
+      body: content,
+      extendBodyBehindAppBar: true,
+      appBar: FAppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: _addEntry,
         child: const Icon(Icons.add),
