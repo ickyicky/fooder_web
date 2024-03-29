@@ -94,7 +94,7 @@ class _LoginScreen extends BasedState<LoginScreen> {
                 Icon(
                   Icons.lock,
                   size: 100,
-                  color: colorScheme.primary,
+                  color: colorScheme.primary.withOpacity(0.85),
                 ),
                 FTextInput(
                   labelText: 'Username',

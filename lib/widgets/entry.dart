@@ -1,7 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:fooder/models/entry.dart';
-import 'package:fooder/widgets/macro.dart';
+import 'package:fooder/widgets/macroEntry.dart';
 import 'dart:core';
+
+
+class EntryHeader extends StatelessWidget {
+  final Entry entry;
+
+  const EntryHeader(
+      {super.key,
+      required this.entry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            entry.product.name,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Spacer(),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            entry.grams.toStringAsFixed(0) + " g",
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class EntryWidget extends StatelessWidget {
   final Entry entry;
@@ -14,25 +51,12 @@ class EntryWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  entry.product.name,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              Text("${entry.calories.toStringAsFixed(1)} kcal"),
-            ],
-          ),
-          MacroWidget(
+          EntryHeader(entry: entry),
+          MacroEntryWidget(
             protein: entry.protein,
             carb: entry.carb,
             fat: entry.fat,
-            amount: entry.grams,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+            calories: entry.calories,
           ),
         ],
       ),

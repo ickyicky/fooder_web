@@ -28,11 +28,12 @@ class FDateItemWidget extends StatelessWidget {
         onDatePicked(date);
       },
       child: Container(
-        width: 100,
+        width: picked? 100: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           border: Border.all(
-            color: colorScheme.onPrimary,
+            // color: picked ? colorScheme.onPrimary : Colors.transparent,
+            color: Colors.transparent,
             width: 2,
           ),
           color: picked ? colorScheme.onPrimary.withOpacity(0.25) : Colors.transparent,
@@ -44,7 +45,7 @@ class FDateItemWidget extends StatelessWidget {
               dayOfTheWeekMap[date.weekday]!,
               style: TextStyle(
                 color: colorScheme.onPrimary,
-                fontSize: 24,
+                fontSize: picked ? 24: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -52,7 +53,7 @@ class FDateItemWidget extends StatelessWidget {
               '${date.day}.${date.month}',
               style: TextStyle(
                 color: colorScheme.onPrimary,
-                fontSize: 24,
+                fontSize: picked ? 24: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -102,28 +103,35 @@ class _FDatePickerWidgetState extends State<FDatePickerWidget> {
       child: Center(
         child: ListView(
           scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           shrinkWrap: true,
           children: <Widget>[
-            SizedBox(width: 25),
+            FDateItemWidget(date: date.add(Duration(days: -3)), onDatePicked: onDatePicked),
             FDateItemWidget(date: date.add(Duration(days: -2)), onDatePicked: onDatePicked),
-            SizedBox(width: 25),
             FDateItemWidget(date: date.add(Duration(days: -1)), onDatePicked: onDatePicked),
-            SizedBox(width: 25),
             FDateItemWidget(date: date, onDatePicked: onDatePicked, picked: true),
-            SizedBox(width: 25),
             FDateItemWidget(date: date.add(Duration(days: 1)), onDatePicked: onDatePicked),
-            SizedBox(width: 25),
             FDateItemWidget(date: date.add(Duration(days: 2)), onDatePicked: onDatePicked),
             Container(
-              width: 100,
+              width: 50,
               child: IconButton(
                 icon: Icon(
                   Icons.calendar_month,
                   color: colorScheme.onPrimary,
-                  size: 40,
+                  size: 20,
                 ),
                 onPressed: () {
-                  onDatePicked(date.add(Duration(days: 1)));
+                  // open date picker
+                  showDatePicker(
+                    context: context,
+                    initialDate: date,
+                    firstDate: date.add(Duration(days: -365)),
+                    lastDate: date.add(Duration(days: 365)),
+                  ).then((value) {
+                    if (value != null) {
+                      onDatePicked(value);
+                    }
+                  });
                 },
               ),
             ),

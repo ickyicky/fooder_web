@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const FAppBar({super.key});
+  final List<Widget> actions;
+
+  const FAppBar({super.key, required this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +15,7 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: actions,
       )
     );
   }

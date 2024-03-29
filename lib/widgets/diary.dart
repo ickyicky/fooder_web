@@ -80,11 +80,12 @@ class DiaryWidget extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                for (var meal in diary.meals)
+                for (var (i, meal) in diary.meals.indexed)
                   MealWidget(
                     meal: meal,
                     apiClient: apiClient,
                     refreshParent: refreshParent,
+                    initiallyExpanded: i == 0,
                   ),
               ],
             ),

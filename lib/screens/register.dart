@@ -77,7 +77,7 @@ class _RegisterScreen extends BasedState<RegisterScreen> {
                 Icon(
                   Icons.group_add,
                   size: 100,
-                  color: colorScheme.primary,
+                  color: colorScheme.primary.withOpacity(0.85),
                 ),
                 FTextInput(
                   labelText: 'Username',

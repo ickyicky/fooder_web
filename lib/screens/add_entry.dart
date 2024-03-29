@@ -20,7 +20,7 @@ class AddEntryScreen extends BasedScreen {
   State<AddEntryScreen> createState() => _AddEntryScreen();
 }
 
-class _AddEntryScreen extends State<AddEntryScreen> {
+class _AddEntryScreen extends BasedState<AddEntryScreen> {
   final gramsController = TextEditingController();
   final productNameController = TextEditingController();
   Meal? meal;
@@ -129,7 +129,7 @@ class _AddEntryScreen extends State<AddEntryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: FAppBar(),
+      appBar: appBar(),
       body: Center(
         child: Container(
             constraints: const BoxConstraints(maxWidth: 720),

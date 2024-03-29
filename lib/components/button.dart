@@ -21,8 +21,20 @@ class FButton extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: insidePadding),
           decoration: BoxDecoration(
-            color: colorScheme.primary,
+            gradient: LinearGradient(
+              colors: [
+                colorScheme.primary.withOpacity(0.5),
+                colorScheme.secondary.withOpacity(0.5),
+              ],
+            ),
             borderRadius: BorderRadius.circular(4),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.primary.withOpacity(0.3),
+                blurRadius: 5,
+                offset: const Offset(0, 5),
+              )
+            ],
           ),
           child: Center(
             child: Text(
