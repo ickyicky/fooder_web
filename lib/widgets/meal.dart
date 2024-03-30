@@ -7,13 +7,10 @@ import 'package:fooder/screens/meal.dart';
 import 'package:fooder/client.dart';
 import 'dart:core';
 
-
 class MealHeader extends StatelessWidget {
   final Meal meal;
 
-  const MealHeader(
-      {super.key,
-      required this.meal});
+  const MealHeader({super.key, required this.meal});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +21,9 @@ class MealHeader extends StatelessWidget {
           child: Text(
             meal.name,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ],
@@ -34,24 +31,21 @@ class MealHeader extends StatelessWidget {
   }
 }
 
-
 class MealWidget extends StatelessWidget {
-  static final MAX_WIDTH = 920.0;
+  static const maxWidth = 920.0;
 
   final Meal meal;
   final ApiClient apiClient;
   final Function() refreshParent;
   final bool initiallyExpanded;
 
-  const MealWidget(
-    {
-      super.key,
-      required this.meal,
-      required this.apiClient,
-      required this.refreshParent,
-      required this.initiallyExpanded,
-    }
-  );
+  const MealWidget({
+    super.key,
+    required this.meal,
+    required this.apiClient,
+    required this.refreshParent,
+    required this.initiallyExpanded,
+  });
 
   Future<void> _editMeal(context) async {
     await Navigator.push(
@@ -83,8 +77,8 @@ class MealWidget extends StatelessWidget {
     var theme = Theme.of(context);
     var colorScheme = theme.colorScheme;
 
-    var width_avail = MediaQuery.of(context).size.width;
-    var width = width_avail > MAX_WIDTH ? MAX_WIDTH : width_avail;
+    var widthAvail = MediaQuery.of(context).size.width;
+    var width = widthAvail > maxWidth ? maxWidth : widthAvail;
 
     return Center(
       child: Padding(
@@ -119,7 +113,7 @@ class MealWidget extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         MealHeader(meal: meal),
-                        MacroHeaderWidget(
+                        const MacroHeaderWidget(
                           calories: true,
                         ),
                         MacroEntryWidget(
@@ -137,7 +131,9 @@ class MealWidget extends StatelessWidget {
                         title: EntryWidget(
                           entry: entry,
                         ),
-                        tileColor: i % 2 == 0 ? colorScheme.secondary.withOpacity(0.1): Colors.transparent,
+                        tileColor: i % 2 == 0
+                            ? colorScheme.secondary.withOpacity(0.1)
+                            : Colors.transparent,
                         onTap: () => _editEntry(context, entry),
                       )
                   ],

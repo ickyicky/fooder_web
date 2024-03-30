@@ -9,7 +9,15 @@ class FTextInput extends StatelessWidget {
   final bool obscureText;
   final Function(String)? onFieldSubmitted;
 
-  const FTextInput({super.key, required this.labelText, this.padding = 8, required this.controller, this.autofillHints, this.autofocus = false, this.onFieldSubmitted, this.obscureText = false});
+  const FTextInput(
+      {super.key,
+      required this.labelText,
+      this.padding = 8,
+      required this.controller,
+      this.autofillHints,
+      this.autofocus = false,
+      this.onFieldSubmitted,
+      this.obscureText = false});
 
   @override
   Widget build(BuildContext context) {

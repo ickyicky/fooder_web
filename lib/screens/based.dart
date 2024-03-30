@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooder/client.dart';
-import 'package:fooder/components/appBar.dart';
-import 'package:fooder/components/navigationBar.dart';
+import 'package:fooder/components/app_bar.dart';
+import 'package:fooder/components/navigation_bar.dart';
 import 'package:fooder/screens/login.dart';
 import 'package:fooder/screens/main.dart';
 
@@ -69,21 +69,21 @@ abstract class BasedState<T extends BasedScreen> extends State<T> {
                 Icons.dinner_dining,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
-              onPressed: () => null,
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 Icons.lunch_dining,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
-              onPressed: () => null,
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 Icons.person,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
-              onPressed: () => null,
+              onPressed: () {},
             ),
           ],
         ),
@@ -98,9 +98,9 @@ abstract class BasedState<T extends BasedScreen> extends State<T> {
           message,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onError,
-          ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onError,
+              ),
         ),
         backgroundColor: Theme.of(context).colorScheme.error.withOpacity(0.8),
       ),
@@ -114,9 +114,9 @@ abstract class BasedState<T extends BasedScreen> extends State<T> {
           text,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
       ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-
 class FDateItemWidget extends StatelessWidget {
   final DateTime date;
   final bool picked;
   final Function(DateTime) onDatePicked;
 
-  const FDateItemWidget({super.key, required this.date, required this.onDatePicked, this.picked = false});
+  const FDateItemWidget(
+      {super.key,
+      required this.date,
+      required this.onDatePicked,
+      this.picked = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class FDateItemWidget extends StatelessWidget {
         onDatePicked(date);
       },
       child: Container(
-        width: picked? 100: 50,
+        width: picked ? 100 : 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           border: Border.all(
@@ -36,7 +39,9 @@ class FDateItemWidget extends StatelessWidget {
             color: Colors.transparent,
             width: 2,
           ),
-          color: picked ? colorScheme.onPrimary.withOpacity(0.25) : Colors.transparent,
+          color: picked
+              ? colorScheme.onPrimary.withOpacity(0.25)
+              : Colors.transparent,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +50,7 @@ class FDateItemWidget extends StatelessWidget {
               dayOfTheWeekMap[date.weekday]!,
               style: TextStyle(
                 color: colorScheme.onPrimary,
-                fontSize: picked ? 24: 12,
+                fontSize: picked ? 24 : 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -53,7 +58,7 @@ class FDateItemWidget extends StatelessWidget {
               '${date.day}.${date.month}',
               style: TextStyle(
                 color: colorScheme.onPrimary,
-                fontSize: picked ? 24: 12,
+                fontSize: picked ? 24 : 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -68,7 +73,8 @@ class FDatePickerWidget extends StatefulWidget {
   final DateTime date;
   final Function(DateTime) onDatePicked;
 
-  const FDatePickerWidget({super.key, required this.date, required this.onDatePicked});
+  const FDatePickerWidget(
+      {super.key, required this.date, required this.onDatePicked});
 
   @override
   State<FDatePickerWidget> createState() => _FDatePickerWidgetState();
@@ -106,13 +112,18 @@ class _FDatePickerWidgetState extends State<FDatePickerWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           shrinkWrap: true,
           children: <Widget>[
-            FDateItemWidget(date: date.add(Duration(days: -3)), onDatePicked: onDatePicked),
-            FDateItemWidget(date: date.add(Duration(days: -2)), onDatePicked: onDatePicked),
-            FDateItemWidget(date: date.add(Duration(days: -1)), onDatePicked: onDatePicked),
-            FDateItemWidget(date: date, onDatePicked: onDatePicked, picked: true),
-            FDateItemWidget(date: date.add(Duration(days: 1)), onDatePicked: onDatePicked),
-            FDateItemWidget(date: date.add(Duration(days: 2)), onDatePicked: onDatePicked),
-            Container(
+            FDateItemWidget(
+                date: date.add(const Duration(days: -2)),
+                onDatePicked: onDatePicked),
+            FDateItemWidget(
+                date: date.add(const Duration(days: -1)),
+                onDatePicked: onDatePicked),
+            FDateItemWidget(
+                date: date, onDatePicked: onDatePicked, picked: true),
+            FDateItemWidget(
+                date: date.add(const Duration(days: 1)),
+                onDatePicked: onDatePicked),
+            SizedBox(
               width: 50,
               child: IconButton(
                 icon: Icon(
@@ -125,8 +136,8 @@ class _FDatePickerWidgetState extends State<FDatePickerWidget> {
                   showDatePicker(
                     context: context,
                     initialDate: date,
-                    firstDate: date.add(Duration(days: -365)),
-                    lastDate: date.add(Duration(days: 365)),
+                    firstDate: date.add(const Duration(days: -365)),
+                    lastDate: date.add(const Duration(days: 365)),
                   ).then((value) {
                     if (value != null) {
                       onDatePicked(value);

@@ -7,7 +7,11 @@ class MealScreen extends BasedScreen {
   final Meal meal;
   final Function() refresh;
 
-  const MealScreen({super.key, required super.apiClient, required this.refresh, required this.meal});
+  const MealScreen(
+      {super.key,
+      required super.apiClient,
+      required this.refresh,
+      required this.meal});
 
   @override
   State<MealScreen> createState() => _AddMealScreen();

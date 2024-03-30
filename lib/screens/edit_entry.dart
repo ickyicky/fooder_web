@@ -106,8 +106,7 @@ class _EditEntryScreen extends State<EditEntryScreen> {
 
     if (res is String) {
       try {
-        var productMap =
-            await widget.apiClient.getProductByBarcode(res);
+        var productMap = await widget.apiClient.getProductByBarcode(res);
 
         var product = Product.fromJson(productMap);
 

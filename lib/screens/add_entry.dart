@@ -7,8 +7,6 @@ import 'package:fooder/models/meal.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
-import 'package:fooder/components/appBar.dart';
-
 
 class AddEntryScreen extends BasedScreen {
   final Diary diary;
@@ -58,6 +56,7 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
     });
   }
 
+  @override
   void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -99,7 +98,6 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
     popMeDaddy();
   }
 
-
   Future<void> _findProductByBarCode() async {
     var res = await Navigator.push(
       context,
@@ -110,8 +108,7 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
 
     if (res is String) {
       try {
-        var productMap =
-            await widget.apiClient.getProductByBarcode(res);
+        var productMap = await widget.apiClient.getProductByBarcode(res);
 
         var product = Product.fromJson(productMap);
 

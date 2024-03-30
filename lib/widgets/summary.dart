@@ -5,15 +5,11 @@ import 'package:fooder/screens/add_meal.dart';
 import 'package:fooder/client.dart';
 import 'dart:core';
 
-
 class SummaryHeader extends StatelessWidget {
   final Diary diary;
   final Function addMeal;
 
-  const SummaryHeader(
-      {super.key,
-      required this.addMeal,
-      required this.diary});
+  const SummaryHeader({super.key, required this.addMeal, required this.diary});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +20,16 @@ class SummaryHeader extends StatelessWidget {
           child: Text(
             "Summary",
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: IconButton(
-            icon: Icon(Icons.playlist_add_rounded),
+            icon: const Icon(Icons.playlist_add_rounded),
             iconSize: 32,
             color: Theme.of(context).colorScheme.onPrimary,
             onPressed: () => addMeal(context),
@@ -44,9 +40,8 @@ class SummaryHeader extends StatelessWidget {
   }
 }
 
-
 class SummaryWidget extends StatelessWidget {
-  static final MAX_WIDTH = 920.0;
+  static const maxWidth = 920.0;
 
   final Diary diary;
   final ApiClient apiClient;
@@ -75,8 +70,8 @@ class SummaryWidget extends StatelessWidget {
     var theme = Theme.of(context);
     var colorScheme = theme.colorScheme;
 
-    var width_avail = MediaQuery.of(context).size.width;
-    var width = width_avail > MAX_WIDTH ? MAX_WIDTH : width_avail;
+    var widthAvail = MediaQuery.of(context).size.width;
+    var width = widthAvail > maxWidth ? maxWidth : widthAvail;
 
     return Center(
       child: Padding(
@@ -100,11 +95,12 @@ class SummaryWidget extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                 child: Column(
                   children: <Widget>[
                     SummaryHeader(diary: diary, addMeal: _addMeal),
-                    MacroHeaderWidget(
+                    const MacroHeaderWidget(
                       calories: true,
                     ),
                     MacroEntryWidget(

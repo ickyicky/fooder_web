@@ -11,7 +11,7 @@ class MacroWidget extends StatelessWidget {
   final Widget? child;
 
   const MacroWidget({
-    Key? key,
+    super.key,
     this.calories,
     this.amount,
     this.child,
@@ -20,7 +20,7 @@ class MacroWidget extends StatelessWidget {
     required this.carb,
     required this.fat,
     required this.style,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

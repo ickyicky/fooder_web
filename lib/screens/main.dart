@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fooder/screens/based.dart';
 import 'package:fooder/screens/add_entry.dart';
-import 'package:fooder/screens/add_meal.dart';
 import 'package:fooder/models/diary.dart';
-import 'package:fooder/widgets/diary.dart';
 import 'package:fooder/widgets/summary.dart';
 import 'package:fooder/widgets/meal.dart';
-import 'package:fooder/widgets/macroEntry.dart';
 import 'package:fooder/components/sliver.dart';
-import 'package:fooder/components/datePicker.dart';
+import 'package:fooder/components/date_picker.dart';
 import 'package:blur/blur.dart';
 
 class MainScreen extends BasedScreen {
@@ -60,54 +57,54 @@ class _MainScreen extends BasedState<MainScreen> {
     var colorScheme = theme.colorScheme;
 
     return Container(
-        height: 64,
-        width: 64,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.primary.withOpacity(0.3),
-              blurRadius: 5,
-              offset: const Offset(0, 5),
-            )
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: Stack(
-            children: [
-              Blur(
-                blur: 10,
-                blurColor: colorScheme.primary.withOpacity(0.1),
-                child: Container(
-                  height: 64,
-                  width: 64,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        colorScheme.primary.withOpacity(0.1),
-                        colorScheme.secondary.withOpacity(0.1),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Container(
+      height: 64,
+      width: 64,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.primary.withOpacity(0.3),
+            blurRadius: 5,
+            offset: const Offset(0, 5),
+          )
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: Stack(
+          children: [
+            Blur(
+              blur: 10,
+              blurColor: colorScheme.primary.withOpacity(0.1),
+              child: Container(
                 height: 64,
                 width: 64,
-                child: FloatingActionButton(
-                  elevation: 0,
-                  onPressed: _addEntry,
-                  backgroundColor: Colors.transparent,
-                  child: Icon(
-                    Icons.library_add,
-                    color: colorScheme.onPrimary,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.primary.withOpacity(0.1),
+                      colorScheme.secondary.withOpacity(0.1),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 64,
+              width: 64,
+              child: FloatingActionButton(
+                elevation: 0,
+                onPressed: _addEntry,
+                backgroundColor: Colors.transparent,
+                child: Icon(
+                  Icons.library_add,
+                  color: colorScheme.onPrimary,
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -116,36 +113,34 @@ class _MainScreen extends BasedState<MainScreen> {
     Widget content;
 
     if (diary != null) {
-      content = CustomScrollView(
-        slivers: <Widget>[
-          SliverPersistentHeader(
-            delegate: FSliverAppBar(child: FDatePickerWidget(date: date, onDatePicked: _pickDate)),
-            pinned: true,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SummaryWidget(
-                  diary: diary!,
+      content = CustomScrollView(slivers: <Widget>[
+        SliverPersistentHeader(
+          delegate: FSliverAppBar(
+              child: FDatePickerWidget(date: date, onDatePicked: _pickDate)),
+          pinned: true,
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              SummaryWidget(
+                diary: diary!,
+                apiClient: widget.apiClient,
+                refreshParent: _asyncInitState,
+              ),
+              for (var (i, meal) in diary!.meals.indexed)
+                MealWidget(
+                  meal: meal,
                   apiClient: widget.apiClient,
                   refreshParent: _asyncInitState,
+                  initiallyExpanded: i == 0,
                 ),
-                for (var (i, meal) in diary!.meals.indexed)
-                  MealWidget(
-                    meal: meal,
-                    apiClient: widget.apiClient,
-                    refreshParent: _asyncInitState,
-                    initiallyExpanded: i == 0,
-                  ),
-              ],
-            ),
+            ],
           ),
-        ]
-      );
+        ),
+      ]);
     } else {
-      content = const Center(child: const CircularProgressIndicator());
+      content = const Center(child: CircularProgressIndicator());
     }
-
 
     return Scaffold(
       body: content,

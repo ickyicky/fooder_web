@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 
-
 class ClipShadowPath extends StatelessWidget {
   final Shadow shadow;
   final CustomClipper<Path> clipper;
   final Widget child;
 
-  ClipShadowPath({
+  const ClipShadowPath({
+    super.key,
     required this.shadow,
     required this.clipper,
     required this.child,
@@ -17,10 +17,10 @@ class ClipShadowPath extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _ClipShadowShadowPainter(
-        clipper: this.clipper,
-        shadow: this.shadow,
+        clipper: clipper,
+        shadow: shadow,
       ),
-      child: ClipPath(child: child, clipper: this.clipper),
+      child: ClipPath(clipper: clipper, child: child),
     );
   }
 }
@@ -47,7 +47,7 @@ class _ClipShadowShadowPainter extends CustomPainter {
 class BackgroundWave extends StatelessWidget {
   final double height;
 
-  const BackgroundWave({Key? key, required this.height}) : super(key: key);
+  const BackgroundWave({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -94,21 +94,30 @@ class BackgroundWaveClipper extends CustomClipper<Path> {
     var lastCurve = Offset(40, size.height - 20);
 
     path.quadraticBezierTo(
-        firstCurve.dx, firstCurve.dy, lastCurve.dx, lastCurve.dy,
+      firstCurve.dx,
+      firstCurve.dy,
+      lastCurve.dx,
+      lastCurve.dy,
     );
 
     firstCurve = Offset(0, size.height - 20);
     lastCurve = Offset(size.width - 40, size.height - 20);
 
     path.quadraticBezierTo(
-        firstCurve.dx, firstCurve.dy, lastCurve.dx, lastCurve.dy,
+      firstCurve.dx,
+      firstCurve.dy,
+      lastCurve.dx,
+      lastCurve.dy,
     );
 
     firstCurve = Offset(size.width, size.height - 20);
     lastCurve = Offset(size.width, size.height);
 
     path.quadraticBezierTo(
-        firstCurve.dx, firstCurve.dy, lastCurve.dx, lastCurve.dy,
+      firstCurve.dx,
+      firstCurve.dy,
+      lastCurve.dx,
+      lastCurve.dy,
     );
 
     path.lineTo(size.width, 0.0);
@@ -126,8 +135,10 @@ class FSliverAppBar extends SliverPersistentHeaderDelegate {
   const FSliverAppBar({required this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    var adjustedShrinkOffset = shrinkOffset > minExtent ? minExtent : shrinkOffset;
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    var adjustedShrinkOffset =
+        shrinkOffset > minExtent ? minExtent : shrinkOffset;
     double offset = (minExtent - adjustedShrinkOffset);
 
     if (offset < 4) {
@@ -141,9 +152,9 @@ class FSliverAppBar extends SliverPersistentHeaderDelegate {
         ),
         Positioned(
           top: offset,
-          child: child,
           left: 16,
           right: 16,
+          child: child,
         )
       ],
     );

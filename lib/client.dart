@@ -5,13 +5,12 @@ import 'package:fooder/models/meal.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 class ApiClient {
   final String baseUrl;
   String? token;
   String? refreshToken;
   http.Client httpClient = http.Client();
-  final FlutterSecureStorage storage = FlutterSecureStorage();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   ApiClient({
     required this.baseUrl,
@@ -219,8 +218,9 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> getProductByBarcode(String barcode) async {
-    var response =
-        await get("/product/by_barcode?${Uri(queryParameters: {"barcode": barcode}).query}");
+    var response = await get("/product/by_barcode?${Uri(queryParameters: {
+          "barcode": barcode
+        }).query}");
     return response;
   }
 
@@ -283,8 +283,7 @@ class ApiClient {
     }
   }
 
-  Future<void> addMeal(
-      {required String name, required int diaryId}) async {
+  Future<void> addMeal({required String name, required int diaryId}) async {
     await post("/meal", {
       "name": name,
       "diary_id": diaryId,
@@ -292,7 +291,9 @@ class ApiClient {
   }
 
   Future<void> addMealFromPreset(
-      {required String name, required int diaryId, required int presetId}) async {
+      {required String name,
+      required int diaryId,
+      required int presetId}) async {
     await post("/meal/from_preset", {
       "name": name,
       "diary_id": diaryId,

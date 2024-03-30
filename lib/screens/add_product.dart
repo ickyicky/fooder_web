@@ -43,7 +43,8 @@ class _AddProductScreen extends State<AddProductScreen> {
     );
   }
 
-  Future<double?> _parseDouble(String text, String name, {bool silent = false}) async {
+  Future<double?> _parseDouble(String text, String name,
+      {bool silent = false}) async {
     try {
       return double.parse(text.replaceAll(",", "."));
     } catch (e) {
@@ -58,7 +59,8 @@ class _AddProductScreen extends State<AddProductScreen> {
     var carb = await _parseDouble(carbController.text, "Carbs");
     var fat = await _parseDouble(fatController.text, "Fat");
     var protein = await _parseDouble(proteinController.text, "Protein");
-    var fiber = await _parseDouble(fiberController.text, "Fiber", silent: true) ?? 0;
+    var fiber =
+        await _parseDouble(fiberController.text, "Fiber", silent: true) ?? 0;
 
     if (carb == null || fat == null || protein == null) {
       return;

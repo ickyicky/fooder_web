@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-
 class MacroHeaderWidget extends StatelessWidget {
-  static final double PAD_Y = 4;
-  static final double PAD_X = 8;
+  static const double PAD_Y = 4;
+  static const double PAD_X = 8;
 
   final bool? fiber;
   final bool? calories;
 
-  const MacroHeaderWidget(
-    {
-      super.key,
-      this.fiber = false,
-      this.calories = false,
-    }
-  );
-
+  const MacroHeaderWidget({
+    super.key,
+    this.fiber = false,
+    this.calories = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +39,16 @@ class MacroHeaderWidget extends StatelessWidget {
     for (var element in elements) {
       children.add(
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 2,
           ),
           child: SizedBox(
             width: 55,
             child: Text(
               element,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -60,10 +56,10 @@ class MacroHeaderWidget extends StatelessWidget {
       );
     }
 
-    children.add(Spacer());
+    children.add(const Spacer());
 
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: PAD_Y,
         horizontal: PAD_X,
       ),
@@ -75,10 +71,9 @@ class MacroHeaderWidget extends StatelessWidget {
   }
 }
 
-
 class MacroEntryWidget extends StatelessWidget {
-  static final double PAD_Y = 4;
-  static final double PAD_X = 8;
+  static const double PAD_Y = 4;
+  static const double PAD_X = 8;
 
   final double protein;
   final double carb;
@@ -86,35 +81,32 @@ class MacroEntryWidget extends StatelessWidget {
   final double? fiber;
   final double? calories;
 
-  const MacroEntryWidget(
-    {
-      super.key,
-      required this.protein,
-      required this.carb,
-      required this.fat,
-      this.fiber,
-      this.calories,
-    }
-  );
-
+  const MacroEntryWidget({
+    super.key,
+    required this.protein,
+    required this.carb,
+    required this.fat,
+    this.fiber,
+    this.calories,
+  });
 
   @override
   Widget build(BuildContext context) {
     var elements = <String>[
-      "${carb.toStringAsFixed(1)}",
-      "${fat.toStringAsFixed(1)}",
-      "${protein.toStringAsFixed(1)}",
+      (carb.toStringAsFixed(1)),
+      (fat.toStringAsFixed(1)),
+      (protein.toStringAsFixed(1)),
     ];
 
     if (fiber != null) {
       elements.add(
-        "${fiber!.toStringAsFixed(1)}",
+        fiber!.toStringAsFixed(1),
       );
     }
 
     if (calories != null) {
       elements.add(
-        "${calories!.toStringAsFixed(0)}",
+        calories!.toStringAsFixed(0),
       );
     }
 
@@ -123,16 +115,16 @@ class MacroEntryWidget extends StatelessWidget {
     for (var element in elements) {
       children.add(
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 2,
           ),
           child: SizedBox(
             width: 55,
             child: Text(
               element,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -140,10 +132,10 @@ class MacroEntryWidget extends StatelessWidget {
       );
     }
 
-    children.add(Spacer());
+    children.add(const Spacer());
 
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: PAD_Y,
         horizontal: PAD_X,
       ),
