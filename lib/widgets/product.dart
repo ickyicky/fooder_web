@@ -3,6 +3,33 @@ import 'package:fooder/models/product.dart';
 import 'package:fooder/widgets/macro.dart';
 import 'dart:core';
 
+class ProductHeader extends StatelessWidget {
+  final String title;
+
+  const ProductHeader({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              title,
+              overflow: TextOverflow.fade,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class ProductWidget extends StatelessWidget {
   final Product product;
 
@@ -14,26 +41,21 @@ class ProductWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  product.name,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              Text("${product.calories.toStringAsFixed(1)} kcal"),
-            ],
+          ProductHeader(
+            title: product.name,
           ),
-          MacroWidget(
+          const MacroHeaderWidget(
+            fiber: true,
+            calories: true,
+            alignment: Alignment.center,
+          ),
+          MacroEntryWidget(
             protein: product.protein,
             carb: product.carb,
             fat: product.fat,
             fiber: product.fiber,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontWeight: FontWeight.bold,
-                ),
+            calories: product.calories,
+            alignment: Alignment.center,
           ),
         ],
       ),

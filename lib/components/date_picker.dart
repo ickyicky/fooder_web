@@ -40,7 +40,7 @@ class FDateItemWidget extends StatelessWidget {
             width: 2,
           ),
           color: picked
-              ? colorScheme.onPrimary.withOpacity(0.25)
+              ? colorScheme.onSurfaceVariant.withOpacity(0.25)
               : Colors.transparent,
         ),
         child: Column(
@@ -49,7 +49,7 @@ class FDateItemWidget extends StatelessWidget {
             Text(
               dayOfTheWeekMap[date.weekday]!,
               style: TextStyle(
-                color: colorScheme.onPrimary,
+                color: colorScheme.onSurfaceVariant,
                 fontSize: picked ? 24 : 12,
                 fontWeight: FontWeight.bold,
               ),
@@ -57,7 +57,7 @@ class FDateItemWidget extends StatelessWidget {
             Text(
               '${date.day}.${date.month}',
               style: TextStyle(
-                color: colorScheme.onPrimary,
+                color: colorScheme.onSurfaceVariant,
                 fontSize: picked ? 24 : 12,
                 fontWeight: FontWeight.bold,
               ),
@@ -128,7 +128,7 @@ class _FDatePickerWidgetState extends State<FDatePickerWidget> {
               child: IconButton(
                 icon: Icon(
                   Icons.calendar_month,
-                  color: colorScheme.onPrimary,
+                  color: colorScheme.onSurfaceVariant,
                   size: 20,
                 ),
                 onPressed: () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:blur/blur.dart';
+import 'package:fooder/components/blur_container.dart';
 
 class ClipShadowPath extends StatelessWidget {
   final Shadow shadow;
@@ -56,28 +56,11 @@ class BackgroundWave extends StatelessWidget {
 
     return SizedBox(
       height: height,
-      child: ClipShadowPath(
+      child: ClipPath(
         clipper: BackgroundWaveClipper(),
-        shadow: BoxShadow(
-          blurRadius: 5,
-          color: colorScheme.primary.withOpacity(0.3),
-          offset: const Offset(0, 5),
-        ),
-        child: Blur(
-          blur: 10,
-          blurColor: colorScheme.primary.withOpacity(0.1),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  colorScheme.primary.withOpacity(0.1),
-                  colorScheme.secondary.withOpacity(0.1),
-                ],
-              ),
-            ),
-          ),
+        child: BlurContainer(
+          width: MediaQuery.of(context).size.width,
+          height: height,
         ),
       ),
     );
@@ -131,8 +114,9 @@ class BackgroundWaveClipper extends CustomClipper<Path> {
 }
 
 class FSliverAppBar extends SliverPersistentHeaderDelegate {
+  final double preferredHeight;
   final Widget child;
-  const FSliverAppBar({required this.child});
+  const FSliverAppBar({required this.child, this.preferredHeight = 220});
 
   @override
   Widget build(
@@ -147,8 +131,11 @@ class FSliverAppBar extends SliverPersistentHeaderDelegate {
 
     return Stack(
       children: [
-        const BackgroundWave(
-          height: 280,
+        // const BackgroundWave(
+        //   height: preferredHeight,
+        // ),
+        BlurContainer(
+          height: preferredHeight,
         ),
         Positioned(
           top: offset,
@@ -161,10 +148,10 @@ class FSliverAppBar extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 280;
+  double get maxExtent => preferredHeight;
 
   @override
-  double get minExtent => 140;
+  double get minExtent => preferredHeight / 2;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

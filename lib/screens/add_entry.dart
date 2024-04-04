@@ -5,6 +5,9 @@ import 'package:fooder/models/product.dart';
 import 'package:fooder/models/diary.dart';
 import 'package:fooder/models/meal.dart';
 import 'package:fooder/widgets/product.dart';
+import 'package:fooder/components/text.dart';
+import 'package:fooder/components/dropdown.dart';
+import 'package:fooder/components/floating_action_button.dart';
 import 'package:fooder/screens/add_product.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
@@ -132,7 +135,8 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
             constraints: const BoxConstraints(maxWidth: 720),
             padding: const EdgeInsets.all(10),
             child: ListView(children: <Widget>[
-              DropdownButton<Meal>(
+              FDropdown<Meal>(
+                labelText: 'Meal',
                 value: meal,
                 // Callback that sets the selected popup menu item.
                 onChanged: (Meal? meal) {
@@ -151,19 +155,15 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
                     ),
                 ],
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Product name',
-                ),
+              FTextInput(
+                labelText: 'Product name',
                 controller: productNameController,
                 onChanged: (_) => _getProducts(),
                 onFieldSubmitted: (_) => _addEntry(),
                 autofocus: true,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Grams',
-                ),
+              FTextInput(
+                labelText: 'Grams',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -212,14 +212,15 @@ class _AddEntryScreen extends BasedState<AddEntryScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FloatingActionButton(
+          FActionButton(
             onPressed: _findProductByBarCode,
-            heroTag: null,
-            child: const Icon(Icons.photo_camera),
+            icon: Icons.photo_camera,
           ),
-          FloatingActionButton(
+          const SizedBox(width: 10),
+          FActionButton(
             onPressed: _addEntry,
-            child: const Icon(Icons.add),
+            icon: Icons.library_add,
+            tag: "fap2",
           ),
         ],
       ),

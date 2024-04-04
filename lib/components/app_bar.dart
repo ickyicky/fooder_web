@@ -11,6 +11,8 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: AppBar(
           backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           elevation: 0,
           actions: actions,
         ));

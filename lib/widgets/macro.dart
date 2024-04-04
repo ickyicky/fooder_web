@@ -1,122 +1,163 @@
 import 'package:flutter/material.dart';
+import 'dart:core';
 
-class MacroWidget extends StatelessWidget {
-  final double? amount;
-  final double? calories;
-  final double? fiber;
-  final double protein;
-  final double carb;
-  final double fat;
-  final TextStyle style;
-  final Widget? child;
+class MacroHeaderWidget extends StatelessWidget {
+  static const double padY = 4;
+  static const double padX = 8;
 
-  const MacroWidget({
+  final bool? fiber;
+  final bool? calories;
+  final Alignment alignment;
+
+  const MacroHeaderWidget({
     super.key,
-    this.calories,
-    this.amount,
-    this.child,
-    this.fiber,
-    required this.protein,
-    required this.carb,
-    required this.fat,
-    required this.style,
+    this.fiber = false,
+    this.calories = false,
+    this.alignment = Alignment.centerLeft,
   });
 
   @override
   Widget build(BuildContext context) {
-    var elements = <Widget>[
-      Expanded(
-        flex: 1,
-        child: Text(
-          "C: ${carb.toStringAsFixed(1)}g",
-          style: style,
-          textAlign: TextAlign.center,
+    var elements = <String>[
+      "C(g)",
+      "F(g)",
+      "P(g)",
+    ];
+
+    if (fiber == true) {
+      elements.add(
+        "f(g)",
+      );
+    }
+
+    if (calories == true) {
+      elements.add(
+        "kcal",
+      );
+    }
+
+    var children = <Widget>[];
+
+    if (alignment == Alignment.centerRight) {
+      children.add(const Spacer());
+    }
+
+    for (var element in elements) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 2,
+          ),
+          child: SizedBox(
+            width: 55,
+            child: Text(
+              element,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
+      );
+    }
+
+    if (alignment == Alignment.centerLeft) {
+      children.add(const Spacer());
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: padY,
+        horizontal: padX,
       ),
-      Expanded(
-        flex: 1,
-        child: Text(
-          "F: ${fat.toStringAsFixed(1)}g",
-          style: style,
-          textAlign: TextAlign.center,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: children,
       ),
-      Expanded(
-        flex: 1,
-        child: Text(
-          "P: ${protein.toStringAsFixed(1)}g",
-          style: style,
-          textAlign: TextAlign.center,
-        ),
-      ),
+    );
+  }
+}
+
+class MacroEntryWidget extends StatelessWidget {
+  static const double padY = 4;
+  static const double padX = 8;
+
+  final double protein;
+  final double carb;
+  final double fat;
+  final double? fiber;
+  final double? calories;
+  final Alignment alignment;
+
+  const MacroEntryWidget({
+    super.key,
+    required this.protein,
+    required this.carb,
+    required this.fat,
+    this.fiber,
+    this.calories,
+    this.alignment = Alignment.centerLeft,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var elements = <String>[
+      (carb.toStringAsFixed(1)),
+      (fat.toStringAsFixed(1)),
+      (protein.toStringAsFixed(1)),
     ];
 
     if (fiber != null) {
       elements.add(
-        Expanded(
-          flex: 1,
-          child: Text(
-            "f: ${fiber!.toStringAsFixed(1)}g",
-            style: style,
-            textAlign: TextAlign.center,
-          ),
-        ),
+        fiber!.toStringAsFixed(1),
       );
     }
 
     if (calories != null) {
       elements.add(
-        Expanded(
-          flex: 1,
-          child: Text(
-            "${calories!.toStringAsFixed(1)} kcal",
-            style: style,
-            textAlign: TextAlign.center,
+        calories!.toStringAsFixed(0),
+      );
+    }
+
+    var children = <Widget>[];
+
+    if (alignment == Alignment.centerRight) {
+      children.add(const Spacer());
+    }
+
+    for (var element in elements) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 2,
+          ),
+          child: SizedBox(
+            width: 55,
+            child: Text(
+              element,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );
     }
 
-    if (amount != null) {
-      elements.add(
-        Expanded(
-          flex: 1,
-          child: Text(
-            "${amount!.toStringAsFixed(1)}g",
-            style: style,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    }
-
-    if (child != null) {
-      elements.add(
-        Expanded(
-          flex: 1,
-          child: child!,
-        ),
-      );
-    }
-
-    if (elements.length < 4) {
-      elements.add(
-        const Expanded(
-          flex: 1,
-          child: Text(""),
-        ),
-      );
+    if (alignment == Alignment.centerLeft) {
+      children.add(const Spacer());
     }
 
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 4.0,
-        bottom: 4.0,
-        left: 8.0,
-        right: 8.0,
+      padding: const EdgeInsets.symmetric(
+        vertical: padY,
+        horizontal: padX,
       ),
       child: Row(
-        children: elements,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: children,
       ),
     );
   }

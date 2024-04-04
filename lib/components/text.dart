@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FTextInput extends StatelessWidget {
   final String labelText;
@@ -8,6 +9,9 @@ class FTextInput extends StatelessWidget {
   final bool autofocus;
   final bool obscureText;
   final Function(String)? onFieldSubmitted;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function(String)? onChanged;
 
   const FTextInput(
       {super.key,
@@ -17,7 +21,10 @@ class FTextInput extends StatelessWidget {
       this.autofillHints,
       this.autofocus = false,
       this.onFieldSubmitted,
-      this.obscureText = false});
+      this.obscureText = false,
+      this.keyboardType,
+      this.inputFormatters,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +37,8 @@ class FTextInput extends StatelessWidget {
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: labelText,
+          floatingLabelStyle:
+              theme.textTheme.bodyLarge!.copyWith(color: colorScheme.onSurface),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: colorScheme.primary),
           ),
@@ -41,6 +50,9 @@ class FTextInput extends StatelessWidget {
         autofillHints: autofillHints,
         autofocus: autofocus,
         onFieldSubmitted: onFieldSubmitted,
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
+        onChanged: onChanged,
       ),
     );
   }

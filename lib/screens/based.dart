@@ -43,7 +43,7 @@ abstract class BasedState<T extends BasedScreen> extends State<T> {
         IconButton(
           icon: Icon(
             Icons.logout,
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           onPressed: _logout,
         ),
@@ -60,28 +60,28 @@ abstract class BasedState<T extends BasedScreen> extends State<T> {
             IconButton(
               icon: Icon(
                 Icons.menu_book,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: backToDiary,
             ),
             IconButton(
               icon: Icon(
                 Icons.dinner_dining,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 Icons.lunch_dining,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 Icons.person,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () {},
             ),

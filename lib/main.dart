@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooder/screens/login.dart';
 import 'package:fooder/client.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:fooder/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FOODER',
-      theme: FlexThemeData.light(scheme: FlexScheme.brandBlue),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.brandBlue),
+      theme: MainTheme.light(),
+      darkTheme: MainTheme.dark(),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: LoginScreen(

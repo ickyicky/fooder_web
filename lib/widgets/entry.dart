@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooder/models/entry.dart';
-import 'package:fooder/widgets/macroEntry.dart';
+import 'package:fooder/widgets/macro.dart';
 import 'dart:core';
 
 class EntryHeader extends StatelessWidget {
@@ -12,14 +12,17 @@ class EntryHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-            entry.product.name,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              entry.product.name,
+              overflow: TextOverflow.fade,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ),
         ),
         const Spacer(),
@@ -28,7 +31,7 @@ class EntryHeader extends StatelessWidget {
           child: Text(
             "${entry.grams.toStringAsFixed(0)} g",
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
         ),

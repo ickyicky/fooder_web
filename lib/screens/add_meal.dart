@@ -3,6 +3,8 @@ import 'package:fooder/screens/based.dart';
 import 'package:fooder/models/diary.dart';
 import 'package:fooder/models/preset.dart';
 import 'package:fooder/widgets/preset.dart';
+import 'package:fooder/components/text.dart';
+import 'package:fooder/components/floating_action_button.dart';
 
 class AddMealScreen extends BasedScreen {
   final Diary diary;
@@ -14,7 +16,7 @@ class AddMealScreen extends BasedScreen {
   State<AddMealScreen> createState() => _AddMealScreen();
 }
 
-class _AddMealScreen extends State<AddMealScreen> {
+class _AddMealScreen extends BasedState<AddMealScreen> {
   final nameController = TextEditingController();
   final presetNameController = TextEditingController();
   bool nameChanged = false;
@@ -37,7 +39,7 @@ class _AddMealScreen extends State<AddMealScreen> {
   void initState() {
     super.initState();
     setState(() {
-      nameController.text = "Meal ${widget.diary.meals.length}";
+      nameController.text = "Meal ${widget.diary.meals.length + 1}";
     });
     _getPresets();
   }
@@ -51,15 +53,6 @@ class _AddMealScreen extends State<AddMealScreen> {
   void popMeDaddy() {
     Navigator.pop(
       context,
-    );
-  }
-
-  void showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
     );
   }
 
@@ -121,28 +114,21 @@ class _AddMealScreen extends State<AddMealScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
-      ),
+      appBar: appBar(),
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 720),
           padding: const EdgeInsets.all(10),
           child: ListView(children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Meal name',
-              ),
+            FTextInput(
+              labelText: 'Meal name',
               controller: nameController,
               onChanged: (_) => setState(() {
                 nameChanged = true;
               }),
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Search presets',
-              ),
+            FTextInput(
+              labelText: 'Search presets',
               controller: presetNameController,
               onChanged: (_) => _getPresets(),
             ),
@@ -166,9 +152,9 @@ class _AddMealScreen extends State<AddMealScreen> {
           ]),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FActionButton(
         onPressed: _addMealFromPreset,
-        child: const Icon(Icons.add),
+        icon: Icons.playlist_add_rounded,
       ),
     );
   }

@@ -27,20 +27,8 @@ class FButton extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: insidePadding),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  colorScheme.primary.withOpacity(0.5),
-                  colorScheme.secondary.withOpacity(0.5),
-                ],
-              ),
               borderRadius: BorderRadius.circular(4),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.primary.withOpacity(0.3),
-                  blurRadius: 5,
-                  offset: const Offset(0, 5),
-                )
-              ],
+              color: colorScheme.surfaceTint.withOpacity(0.85),
             ),
             child: Center(
               child: Text(
@@ -48,6 +36,7 @@ class FButton extends StatelessWidget {
                 style: theme.textTheme.labelLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
+                  color: colorScheme.onPrimary,
                 ),
               ),
             ),

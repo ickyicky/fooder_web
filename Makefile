@@ -9,6 +9,7 @@ endif
 
 .PHONY: build
 build:
+	flutter build web
 	$(DOCKER_BUILD) -t registry.domandoman.xyz/fooder/app -f Dockerfile .
 
 .PHONY: push

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fooder/screens/based.dart';
 import 'package:fooder/models/product.dart';
+import 'package:fooder/widgets/product.dart';
+import 'package:fooder/components/text.dart';
+import 'package:fooder/components/floating_action_button.dart';
 
 class AddProductScreen extends BasedScreen {
   const AddProductScreen({super.key, required super.apiClient});
@@ -10,7 +13,7 @@ class AddProductScreen extends BasedScreen {
   State<AddProductScreen> createState() => _AddProductScreen();
 }
 
-class _AddProductScreen extends State<AddProductScreen> {
+class _AddProductScreen extends BasedState<AddProductScreen> {
   final nameController = TextEditingController();
   final carbController = TextEditingController();
   final fatController = TextEditingController();
@@ -31,15 +34,6 @@ class _AddProductScreen extends State<AddProductScreen> {
     Navigator.pop(
       context,
       product,
-    );
-  }
-
-  void showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
     );
   }
 
@@ -113,25 +107,21 @@ class _AddProductScreen extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
-      ),
+      appBar: appBar(),
       body: Center(
         child: Container(
             constraints: const BoxConstraints(maxWidth: 720),
             padding: const EdgeInsets.all(10),
             child: Column(children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Product name',
-                ),
+              FTextInput(
+                labelText: 'Product name',
                 controller: nameController,
+                onChanged: (String value) {
+                  setState(() {});
+                },
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Carbs',
-                ),
+              FTextInput(
+                labelText: 'Carbs',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -143,10 +133,8 @@ class _AddProductScreen extends State<AddProductScreen> {
                   setState(() {});
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Fat',
-                ),
+              FTextInput(
+                labelText: 'Fat',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -158,10 +146,8 @@ class _AddProductScreen extends State<AddProductScreen> {
                   setState(() {});
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Protein',
-                ),
+              FTextInput(
+                labelText: 'Protein',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -173,10 +159,8 @@ class _AddProductScreen extends State<AddProductScreen> {
                   setState(() {});
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Fiber',
-                ),
+              FTextInput(
+                labelText: 'Fiber',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -188,15 +172,30 @@ class _AddProductScreen extends State<AddProductScreen> {
                   setState(() {});
                 },
               ),
-              Text(
-                "${calculateCalories().toStringAsFixed(2)} kcal",
-                textAlign: TextAlign.right,
-              ),
+              ProductWidget(
+                product: Product(
+                  id: 0,
+                  name: nameController.text,
+                  carb: double.tryParse(
+                          carbController.text.replaceAll(",", ".")) ??
+                      0.0,
+                  fat: double.tryParse(
+                          fatController.text.replaceAll(",", ".")) ??
+                      0.0,
+                  protein: double.tryParse(
+                          proteinController.text.replaceAll(",", ".")) ??
+                      0.0,
+                  fiber: double.tryParse(
+                          fiberController.text.replaceAll(",", ".")) ??
+                      0.0,
+                  calories: calculateCalories(),
+                ),
+              )
             ])),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FActionButton(
         onPressed: _addProduct,
-        child: const Icon(Icons.add),
+        icon: Icons.save,
       ),
     );
   }

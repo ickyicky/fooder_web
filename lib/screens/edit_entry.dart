@@ -5,6 +5,8 @@ import 'package:fooder/models/product.dart';
 import 'package:fooder/models/entry.dart';
 import 'package:fooder/widgets/product.dart';
 import 'package:fooder/screens/add_product.dart';
+import 'package:fooder/components/text.dart';
+import 'package:fooder/components/floating_action_button.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class EditEntryScreen extends BasedScreen {
@@ -17,7 +19,7 @@ class EditEntryScreen extends BasedScreen {
   State<EditEntryScreen> createState() => _EditEntryScreen();
 }
 
-class _EditEntryScreen extends State<EditEntryScreen> {
+class _EditEntryScreen extends BasedState<EditEntryScreen> {
   final gramsController = TextEditingController();
   final productNameController = TextEditingController();
   List<Product> products = [];
@@ -51,15 +53,6 @@ class _EditEntryScreen extends State<EditEntryScreen> {
           .map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList();
     });
-  }
-
-  void showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
-    );
   }
 
   Future<double?> _parseDouble(String text, String name) async {
@@ -123,27 +116,20 @@ class _EditEntryScreen extends State<EditEntryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("🅵🅾🅾🅳🅴🆁", style: logoStyle(context)),
-      ),
+      appBar: appBar(),
       body: Center(
         child: Container(
             constraints: const BoxConstraints(maxWidth: 720),
             padding: const EdgeInsets.all(10),
             child: ListView(children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Product name',
-                ),
+              FTextInput(
+                labelText: 'Product name',
                 controller: productNameController,
                 onChanged: (_) => _getProducts(),
                 autofocus: true,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Grams',
-                ),
+              FTextInput(
+                labelText: 'Grams',
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -190,20 +176,21 @@ class _EditEntryScreen extends State<EditEntryScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FloatingActionButton(
+          FActionButton(
             onPressed: _findProductByBarCode,
-            heroTag: null,
-            child: const Icon(Icons.photo_camera),
+            icon: Icons.photo_camera,
           ),
-          FloatingActionButton(
+          const SizedBox(width: 10),
+          FActionButton(
             onPressed: _deleteEntry,
-            heroTag: null,
-            child: const Icon(Icons.delete),
+            tag: "fap1",
+            icon: Icons.delete,
           ),
-          FloatingActionButton(
+          const SizedBox(width: 10),
+          FActionButton(
             onPressed: _saveEntry,
-            heroTag: null,
-            child: const Icon(Icons.save),
+            tag: "fap2",
+            icon: Icons.save,
           ),
         ],
       ),
